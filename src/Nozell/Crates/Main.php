@@ -13,7 +13,7 @@ use Nozell\Crates\Entity\EnderBoxEntity;
 use Nozell\Crates\Entity\IceBoxEntity;
 use Nozell\Crates\Entity\MagmaBoxEntity;
 use Nozell\Crates\Manager\CrateManager;
-use Nozell\Crates\Listeners\EventListener; 
+use Nozell\Crates\Listeners\EventListener;
 use customiesdevs\customies\entity\CustomiesEntityFactory;
 use Nozell\Crates\Utils\CratesUtils;
 use pocketmine\player\Player;
@@ -21,32 +21,34 @@ use pocketmine\resourcepacks\ZippedResourcePack;
 use Symfony\Component\Filesystem\Path;
 use function array_merge;
 
-class Main extends PluginBase implements Listener {
-    
+class Main extends PluginBase implements Listener
+{
+
     private CrateManager $crateManager;
     public Config $config;
-    
+
     const RET_INVALID = 0;
     const RET_SUCCESS = 1;
 
     private static Main $instance;
 
-    public function onEnable(): void {
-        
-        if (!InvMenuHandler::isRegistered()) {     
+    public function onEnable(): void
+    {
+
+        if (!InvMenuHandler::isRegistered()) {
             InvMenuHandler::register($this);
         }
 
         $this->saveDefaultConfig();
-        $this->saveResource("Crates.mcpack");    
+        $this->saveResource("Crates.mcpack");
         $rpManager = $this->getServer()->getResourcePackManager();
         $rpManager->setResourceStack(array_merge($rpManager->getResourceStack(), [new ZippedResourcePack(Path::join($this->getDataFolder(), "Crates.mcpack"))]));
         (new \ReflectionProperty($rpManager, "serverForceResources"))->setValue($rpManager, true);
 
         $this->config = new Config($this->getDataFolder() . "config.yml", Config::YAML);
-        
+
         self::$instance = $this;
-        
+
         $this->crateManager = new CrateManager($this);
 
         $this->getServer()->getCommandMap()->register("crates", new CratesCommand("crates", "Abre el menú principal de crates", "/crates"));
@@ -57,14 +59,16 @@ class Main extends PluginBase implements Listener {
         CustomiesEntityFactory::getInstance()->registerEntity(MagmaBoxEntity::class, "crates:dark_magma", null, "minecraft:humanoid");
         CustomiesEntityFactory::getInstance()->registerEntity(PegasusBoxEntity::class, "crates:golden_pegasus", null, "minecraft:humanoid");
 
-        $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this); 
+        $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
     }
 
-    public static function getInstance(): self {
+    public static function getInstance(): self
+    {
         return self::$instance;
     }
-    
-    public function getCrateManager(): CrateManager {
+
+    public function getCrateManager(): CrateManager
+    {
         return $this->crateManager;
     }
 }

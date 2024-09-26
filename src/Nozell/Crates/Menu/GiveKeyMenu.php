@@ -8,12 +8,14 @@ use Nozell\Main;
 use Nozell\Crates\libs\FormAPI\CustomForm;
 use Nozell\Crates\Meetings\MeetingManager;
 
-final class GiveKeyMenu extends CustomForm {
+final class GiveKeyMenu extends CustomForm
+{
 
     private array $keyTypes;
     private array $onlinePlayers;
 
-    public function __construct(Player $player) {
+    public function __construct(Player $player)
+    {
         parent::__construct(null);
 
         $this->keyTypes = ["mage", "ice", "ender", "magma", "pegasus"];
@@ -26,12 +28,13 @@ final class GiveKeyMenu extends CustomForm {
         $player->sendForm($this);
     }
 
-    public function handleResponse(Player $player, $data): void {
+    public function handleResponse(Player $player, $data): void
+    {
         if ($data === null || !isset($this->keyTypes[$data[0]]) || !is_numeric($data[1]) || $data[1] <= 0 || !isset($this->onlinePlayers[$data[2]])) {
             $player->sendMessage("§cDatos inválidos proporcionados.");
             return;
         }
-        
+
 
         $keyType = $this->keyTypes[$data[0]];
         $amount = (int)$data[1];

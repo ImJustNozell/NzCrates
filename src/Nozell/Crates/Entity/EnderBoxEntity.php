@@ -15,36 +15,43 @@ use pocketmine\Server;
 use pocketmine\entity\Living;
 use Nozell\Crates\Manager\ParticleManager;
 
-class EnderBoxEntity extends Living {
+class EnderBoxEntity extends Living
+{
 
     private ParticleManager $particleManager;
 
-    public function __construct(Location $location, ?CompoundTag $nbt = null){
+    public function __construct(Location $location, ?CompoundTag $nbt = null)
+    {
         parent::__construct($location, $nbt);
-        
+
         $this->particleManager = new ParticleManager();
         $this->setNameTagAlwaysVisible(true);
         $this->setHasGravity(false);
         $this->spawnToAll();
     }
-    
-    public function canBeMovedByCurrents(): bool {
+
+    public function canBeMovedByCurrents(): bool
+    {
         return false;
     }
-    
-    public static function getNetworkTypeId(): string {
+
+    public static function getNetworkTypeId(): string
+    {
         return "crates:grand_ender_chest";
     }
 
-    protected function getInitialSizeInfo(): EntitySizeInfo {
+    protected function getInitialSizeInfo(): EntitySizeInfo
+    {
         return new EntitySizeInfo(1.8, 0.8, 1.62);
     }
-    
-    public function getName(): string {
+
+    public function getName(): string
+    {
         return "EnderBoxEntity";
     }
 
-    public function onUpdate(int $currentTick): bool {
+    public function onUpdate(int $currentTick): bool
+    {
         $config = Main::getInstance()->getConfig();
         $pos = $this->getPosition();
         $world = $this->getWorld();
@@ -56,7 +63,8 @@ class EnderBoxEntity extends Living {
         return parent::onUpdate($currentTick);
     }
 
-    public function attack(EntityDamageEvent $source): void {
+    public function attack(EntityDamageEvent $source): void
+    {
         $source->cancel();
         if ($source instanceof EntityDamageByEntityEvent) {
             $damager = $source->getDamager();
@@ -80,11 +88,13 @@ class EnderBoxEntity extends Living {
         }
     }
 
-    protected function getInitialDragMultiplier(): float {
+    protected function getInitialDragMultiplier(): float
+    {
         return 0.0;
     }
 
-    protected function getInitialGravity(): float {
+    protected function getInitialGravity(): float
+    {
         return 0.0;
     }
 }

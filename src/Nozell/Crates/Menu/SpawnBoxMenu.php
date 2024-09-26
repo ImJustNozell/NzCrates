@@ -11,11 +11,13 @@ use Nozell\Crates\Entity\MagmaBoxEntity;
 use Nozell\Crates\libs\FormAPI\CustomForm;
 use pocketmine\nbt\tag\CompoundTag;
 
-class SpawnBoxMenu extends CustomForm {
+class SpawnBoxMenu extends CustomForm
+{
 
     private array $crateTypes;
 
-    public function __construct(Player $player) {
+    public function __construct(Player $player)
+    {
         parent::__construct(null);
 
         $this->crateTypes = ["mage", "ice", "ender", "magma", "pegasus"];
@@ -26,7 +28,8 @@ class SpawnBoxMenu extends CustomForm {
         $player->sendForm($this);
     }
 
-    public function handleResponse(Player $player, $data): void {
+    public function handleResponse(Player $player, $data): void
+    {
         if ($data === null || !isset($this->crateTypes[$data[0]])) {
             $player->sendMessage("§cDatos inválidos proporcionados.");
             return;

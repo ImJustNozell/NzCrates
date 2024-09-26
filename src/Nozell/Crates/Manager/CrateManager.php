@@ -2,7 +2,6 @@
 
 namespace Nozell\Crates\Manager;
 
-use pocketmine\item\Item;
 use pocketmine\utils\TextFormat;
 use pocketmine\player\Player;
 use pocketmine\utils\Config;
@@ -15,18 +14,21 @@ use pocketmine\scheduler\TaskScheduler;
 use pocketmine\Server;
 use Nozell\Crates\Main;
 
-class CrateManager {
+class CrateManager
+{
     use LavaParticleEffect;
     use SoundEffect;
 
     public Config $crateData;
-    
 
-    public function saveCrates(): void {
+
+    public function saveCrates(): void
+    {
         Main::getInstance()->getConfig()->save();
     }
 
-    public function addCrateItems(string $crateLabel, array $crateItems): void {
+    public function addCrateItems(string $crateLabel, array $crateItems): void
+    {
         $serializedItems = [];
 
         foreach ($crateItems as $crateItem) {
@@ -37,17 +39,18 @@ class CrateManager {
         $this->saveCrates();
     }
 
-    public function crateExists(string $crateLabel): bool {
+    public function crateExists(string $crateLabel): bool
+    {
         return Main::getInstance()->getConfig()->exists($crateLabel);
     }
 
-    public function getRandomItemFromCrate(string $crateLabel, string $name, Entity $entity): void {
+    public function getRandomItemFromCrate(string $crateLabel, string $name, Entity $entity): void
+    {
         $targetPlayer = Server::getInstance()->getPlayerExact($name);
 
         if (!$targetPlayer instanceof Player) {
             var_dump("Player Not Found");
             return;
-            
         }
 
         if (!Main::getInstance()->getConfig()->exists($crateLabel)) {
@@ -66,7 +69,7 @@ class CrateManager {
         $actionsQueue = [
             [
                 'actions' => [
-                    function(Player $targetPlayer) use ($randomItem, $itemLabel, $playerInventory, $crateLabel, $entity) {
+                    function (Player $targetPlayer) use ($randomItem, $itemLabel, $playerInventory, $crateLabel, $entity) {
                         $targetPlayer->sendMessage(TextFormat::colorize("&e» You won &a» {$itemLabel}"));
                         $playerInventory->addItem($randomItem);
                         self::playSound($targetPlayer, "firework.twinkle", 100, 500);
@@ -82,7 +85,7 @@ class CrateManager {
             ],
             [
                 'actions' => [
-                    function(Player $targetPlayer) use ($randomItem, $itemLabel, $entity) {
+                    function (Player $targetPlayer) use ($randomItem, $itemLabel, $entity) {
                         $targetPlayer->sendTitle(TextFormat::colorize("&e1"), "", 5, 20, 5);
                         self::playSound($targetPlayer, "note.harp", 100, 500);
                     }
@@ -90,7 +93,7 @@ class CrateManager {
             ],
             [
                 'actions' => [
-                    function(Player $targetPlayer) use ($randomItem, $itemLabel, $entity) {
+                    function (Player $targetPlayer) use ($randomItem, $itemLabel, $entity) {
                         $targetPlayer->sendTitle(TextFormat::colorize("&g2"), "", 5, 20, 5);
                         self::playSound($targetPlayer, "note.harp", 100, 500);
                     }
@@ -98,7 +101,7 @@ class CrateManager {
             ],
             [
                 'actions' => [
-                    function(Player $targetPlayer) use ($randomItem, $itemLabel, $entity) {
+                    function (Player $targetPlayer) use ($randomItem, $itemLabel, $entity) {
                         $targetPlayer->sendTitle(TextFormat::colorize("&63"), "", 5, 20, 5);
                         self::playSound($targetPlayer, "note.harp", 100, 500);
                     }
@@ -110,7 +113,8 @@ class CrateManager {
         $pluginScheduler->scheduleRepeatingTask(new CooldownTask($targetPlayer, $actionsQueue), 20);
     }
 
-    public function getCrateItems(string $crateLabel): array {
+    public function getCrateItems(string $crateLabel): array
+    {
         if (!Main::getInstance()->getConfig()->exists($crateLabel)) {
             var_dump("Crate not found");
             return [];

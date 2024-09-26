@@ -5,9 +5,11 @@ namespace Nozell\Crates\Menu;
 use pocketmine\player\Player;
 use Nozell\Crates\libs\FormAPI\SimpleForm;
 
-class MainMenu extends SimpleForm {
+class MainMenu extends SimpleForm
+{
 
-    public function __construct(Player $player) {
+    public function __construct(Player $player)
+    {
         parent::__construct(null);
 
         $this->setTitle("§l§6Main Menu");
@@ -42,7 +44,8 @@ class MainMenu extends SimpleForm {
         $player->sendForm($this);
     }
 
-    public function handleResponse(Player $player, $data): void {
+    public function handleResponse(Player $player, $data): void
+    {
         if ($data === null) {
             return;
         }

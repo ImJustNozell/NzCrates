@@ -9,19 +9,22 @@ use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 
-class EventListener implements Listener {
+class EventListener implements Listener
+{
 
-    public function onPlayerJoin(PlayerJoinEvent $event): void {
+    public function onPlayerJoin(PlayerJoinEvent $event): void
+    {
         $player = $event->getPlayer();
-        
-MeetingManager::getInstance()->createMeeting($player);
-        
-MeetingManager::getInstance()->getMeeting($player)->join();
+
+        MeetingManager::getInstance()->createMeeting($player);
+
+        MeetingManager::getInstance()->getMeeting($player)->join();
     }
 
-    public function onPlayerQuit(PlayerQuitEvent $event): void {
+    public function onPlayerQuit(PlayerQuitEvent $event): void
+    {
         $player = $event->getPlayer();
-       
-MeetingManager::getInstance()->getMeeting($player)->Close();
+
+        MeetingManager::getInstance()->getMeeting($player)->Close();
     }
 }

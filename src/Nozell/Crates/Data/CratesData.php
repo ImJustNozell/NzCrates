@@ -1,4 +1,3 @@
-
 <?php
 
 declare(strict_types=1);
@@ -7,7 +6,8 @@ namespace Nozell\Crates\Data;
 
 use Nozell\Crates\Meetings\Meeting;
 
-final class CratesData {
+final class CratesData
+{
 
     public function __construct(
         private readonly Meeting $meeting,
@@ -18,83 +18,103 @@ final class CratesData {
         private int $keyPegasus = 0
     ) {}
 
-    public function getKeyMage(): int {
+    public function getKeyMage(): int
+    {
         return $this->keyMage;
     }
 
-    public function setKeyMage(int $amount): void {
+    public function setKeyMage(int $amount): void
+    {
         $this->keyMage = $amount;
     }
 
-    public function addKeyMage(int $amount): void {
+    public function addKeyMage(int $amount): void
+    {
         $this->keyMage += $amount;
     }
 
-    public function reduceKeyMage(): void {
+    public function reduceKeyMage(): void
+    {
         $this->keyMage--;
     }
 
-    public function getKeyIce(): int {
+    public function getKeyIce(): int
+    {
         return $this->keyIce;
     }
 
-    public function setKeyIce(int $amount): void {
+    public function setKeyIce(int $amount): void
+    {
         $this->keyIce = $amount;
     }
 
-    public function addKeyIce(int $amount): void {
+    public function addKeyIce(int $amount): void
+    {
         $this->keyIce += $amount;
     }
 
-    public function reduceKeyIce(): void {
+    public function reduceKeyIce(): void
+    {
         $this->keyIce--;
     }
 
-    public function getKeyEnder(): int {
+    public function getKeyEnder(): int
+    {
         return $this->keyEnder;
     }
 
-    public function setKeyEnder(int $amount): void {
+    public function setKeyEnder(int $amount): void
+    {
         $this->keyEnder = $amount;
     }
 
-    public function addKeyEnder(int $amount): void {
+    public function addKeyEnder(int $amount): void
+    {
         $this->keyEnder += $amount;
     }
 
-    public function reduceKeyEnder(): void {
+    public function reduceKeyEnder(): void
+    {
         $this->keyEnder--;
     }
 
-    public function getKeyMagma(): int {
+    public function getKeyMagma(): int
+    {
         return $this->keyMagma;
     }
 
-    public function setKeyMagma(int $amount): void {
+    public function setKeyMagma(int $amount): void
+    {
         $this->keyMagma = $amount;
     }
 
-    public function addKeyMagma(int $amount): void {
+    public function addKeyMagma(int $amount): void
+    {
         $this->keyMagma += $amount;
     }
 
-    public function reduceKeyMagma(): void {
+    public function reduceKeyMagma(): void
+    {
         $this->keyMagma--;
     }
 
-    public function getKeyPegasus(): int {
+    public function getKeyPegasus(): int
+    {
         return $this->keyPegasus;
     }
 
-    public function setKeyPegasus(int $amount): void {
+    public function setKeyPegasus(int $amount): void
+    {
         $this->keyPegasus = $amount;
     }
 
-    public function addKeyPegasus(int $amount): void {
+    public function addKeyPegasus(int $amount): void
+    {
         $this->keyPegasus += $amount;
     }
 
-    public function reduceKeyPegasus(): void {
+    public function reduceKeyPegasus(): void
+    {
         $this->keyPegasus--;
     }
 }

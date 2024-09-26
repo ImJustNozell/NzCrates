@@ -15,48 +15,56 @@ use Nozell\Crates\Meetings\MeetingManager;
 use Nozell\Crates\Manager\ParticleManager;
 use pocketmine\Server;
 
-class MageBoxEntity extends Living {
+class MageBoxEntity extends Living
+{
 
     private ParticleManager $particleManager;
 
-    public function __construct(Location $location, ?CompoundTag $nbt = null) {
+    public function __construct(Location $location, ?CompoundTag $nbt = null)
+    {
         parent::__construct($location, $nbt);
         $this->particleManager = new ParticleManager();
         $this->setNameTagAlwaysVisible(true);
         $this->setHasGravity(false);
         $this->spawnToAll();
     }
-    
-    public function canBeMovedByCurrents(): bool {
+
+    public function canBeMovedByCurrents(): bool
+    {
         return false;
     }
-    
-    public static function getNetworkTypeId(): string {
+
+    public static function getNetworkTypeId(): string
+    {
         return "crates:mage_chest";
     }
 
-    protected function getInitialSizeInfo(): EntitySizeInfo {
+    protected function getInitialSizeInfo(): EntitySizeInfo
+    {
         return new EntitySizeInfo(1.8, 0.8, 1.62);
     }
-    
-    public function getName(): string {
+
+    public function getName(): string
+    {
         return "MageBoxEntity";
     }
 
-    public function onUpdate(int $currentTick): bool {
+    public function onUpdate(int $currentTick): bool
+    {
         $config = Main::getInstance()->getConfig();
         $pos = $this->getPosition();
         $world = $this->getWorld();
 
         $this->particleManager->sendParticles($world, $pos, 'enchantment');
-        
+
         $floatingText = $config->get("magefloatingtext");
         $this->setNameTag($floatingText);
-    
+
         return parent::onUpdate($currentTick);
     }
 
-    public function attack(EntityDamageEvent $source): void {
+    public function attack(EntityDamageEvent $source): void
+    {
         $source->cancel();
         if ($source instanceof EntityDamageByEntityEvent) {
             $damager = $source->getDamager();
@@ -82,11 +90,13 @@ class MageBoxEntity extends Living {
         }
     }
 
-    protected function getInitialDragMultiplier(): float {
+    protected function getInitialDragMultiplier(): float
+    {
         return 0.0;
     }
 
-    protected function getInitialGravity(): float {
+    protected function getInitialGravity(): float
+    {
         return 0.0;
     }
 }

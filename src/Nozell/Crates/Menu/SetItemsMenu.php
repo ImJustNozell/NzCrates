@@ -10,11 +10,13 @@ use Nozell\Crates\libs\muqsit\invmenu\InvMenu;
 use pocketmine\inventory\Inventory;
 use pocketmine\utils\TextFormat;
 
-class SetItemsMenu extends CustomForm {
+class SetItemsMenu extends CustomForm
+{
 
     private array $crateTypes;
 
-    public function __construct(Player $player) {
+    public function __construct(Player $player)
+    {
         parent::__construct(null);
 
         $this->crateTypes = ["mage", "ice", "ender", "magma", "pegasus"];
@@ -25,7 +27,8 @@ class SetItemsMenu extends CustomForm {
         $player->sendForm($this);
     }
 
-    public function handleResponse(Player $player, $data): void {
+    public function handleResponse(Player $player, $data): void
+    {
         if ($data === null || !isset($this->crateTypes[$data[0]])) {
             $player->sendMessage(TextFormat::RED . "Datos inválidos proporcionados.");
             return;
@@ -36,7 +39,8 @@ class SetItemsMenu extends CustomForm {
         $this->openCrateMenu($player, $crateType);
     }
 
-    public function openCrateMenu(Player $player, string $crateType): void {
+    public function openCrateMenu(Player $player, string $crateType): void
+    {
         $menu = InvMenu::create(InvMenu::TYPE_DOUBLE_CHEST);
         $menu->setName("Crate: " . ucfirst($crateType));
 

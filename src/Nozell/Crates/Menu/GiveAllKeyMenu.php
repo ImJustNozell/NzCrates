@@ -8,11 +8,13 @@ use Nozell\Crates\Main;
 use Nozell\Crates\Meetings\MeetingManager;
 use Nozell\Crates\libs\FormAPI\CustomForm;
 
-final class GiveAllKeyMenu extends CustomForm {
+final class GiveAllKeyMenu extends CustomForm
+{
 
     private array $keyTypes;
 
-    public function __construct(Player $player) {
+    public function __construct(Player $player)
+    {
         parent::__construct(null);
 
         $this->keyTypes = ["mage", "ice", "ender", "magma", "pegasus"];
@@ -23,7 +25,8 @@ final class GiveAllKeyMenu extends CustomForm {
         $player->sendForm($this);
     }
 
-    public function handleResponse(Player $player, $data): void {
+    public function handleResponse(Player $player, $data): void
+    {
         if ($data === null || !isset($this->keyTypes[$data[0]]) || $data[1] === '' || $data[1] <= 0 || !ctype_digit($data[1])) {
             $player->sendMessage("§cDatos inválidos proporcionados.");
             return;
@@ -35,7 +38,7 @@ final class GiveAllKeyMenu extends CustomForm {
         foreach (Server::getInstance()->getOnlinePlayers() as $onlinePlayer) {
             $meeting = MeetingManager::getInstance()->getMeeting($onlinePlayer)->getCratesData();
 
-            match($keyType) {
+            match ($keyType) {
                 "mage" => $meeting->addKeyMage($amount),
                 "ice" => $meeting->addKeyIce($amount),
                 "ender" => $meeting->addKeyEnder($amount),
