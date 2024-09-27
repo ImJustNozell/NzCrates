@@ -10,9 +10,9 @@ use Nozell\Crates\Utils\CooldownTask;
 use Nozell\Crates\Utils\ItemSerializer;
 use Nozell\Crates\Utils\LavaParticleEffect;
 use Nozell\Crates\Utils\SoundEffect;
-use pocketmine\scheduler\TaskScheduler;
 use pocketmine\Server;
 use Nozell\Crates\Main;
+use Nozell\Crates\Manager\LangManager;
 
 class CrateManager
 {
@@ -20,7 +20,6 @@ class CrateManager
     use SoundEffect;
 
     public Config $crateData;
-
 
     public function saveCrates(): void
     {
@@ -70,7 +69,8 @@ class CrateManager
             [
                 'actions' => [
                     function (Player $targetPlayer) use ($randomItem, $itemLabel, $playerInventory, $crateLabel, $entity) {
-                        $targetPlayer->sendMessage(TextFormat::colorize("&e» You won &a» {$itemLabel}"));
+                        $msg = LangManager::getInstance()->generateMsg("won-item", ["{itemName}"], [$itemLabel]);
+                        $targetPlayer->sendMessage(TextFormat::colorize($msg));
                         $playerInventory->addItem($randomItem);
                         self::playSound($targetPlayer, "firework.twinkle", 100, 500);
 
@@ -78,7 +78,12 @@ class CrateManager
 
                         $onlinePlayers = Server::getInstance()->getOnlinePlayers();
                         foreach ($onlinePlayers as $onlinePlayer) {
-                            $onlinePlayer->sendTip(TextFormat::colorize(str_replace(["{userName}", "{itemName}", "{crateName}"], [$targetPlayer->getName(), $itemLabel, $crateLabel], Main::getInstance()->config->get("won_alert"))));
+                            $wonAlertMsg = LangManager::getInstance()->generateMsg(
+                                "won-alert",
+                                ["{userName}", "{itemName}", "{crateName}"],
+                                [$targetPlayer->getName(), $itemLabel, $crateLabel]
+                            );
+                            $onlinePlayer->sendTip(TextFormat::colorize($wonAlertMsg));
                         }
                     }
                 ]

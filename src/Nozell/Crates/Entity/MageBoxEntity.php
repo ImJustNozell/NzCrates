@@ -13,7 +13,7 @@ use pocketmine\entity\Living;
 use Nozell\Crates\Main;
 use Nozell\Crates\Meetings\MeetingManager;
 use Nozell\Crates\Manager\ParticleManager;
-use pocketmine\Server;
+use Nozell\Crates\Manager\LangManager;
 
 class MageBoxEntity extends Living
 {
@@ -51,41 +51,37 @@ class MageBoxEntity extends Living
 
     public function onUpdate(int $currentTick): bool
     {
-        $config = Main::getInstance()->getConfig();
         $pos = $this->getPosition();
         $world = $this->getWorld();
 
         $this->particleManager->sendParticles($world, $pos, 'enchantment');
 
-        $floatingText = $config->get("magefloatingtext");
+        $floatingText = LangManager::getInstance()->generateMsg("mage-floating-text", [], []);
         $this->setNameTag($floatingText);
 
         return parent::onUpdate($currentTick);
     }
 
+
     public function attack(EntityDamageEvent $source): void
     {
         $source->cancel();
-        if ($source instanceof EntityDamageByEntityEvent) {
-            $damager = $source->getDamager();
-            if ($damager instanceof Player) {
-                if ($damager->getInventory()->getItemInHand()->getTypeId() === VanillaItems::DIAMOND_SWORD()->getTypeId()) {
-                    if ($damager->hasPermission("box.dell")) {
-                        $this->flagForDespawn();
-                        return;
-                    }
-                } else {
-                    $randomItem = Main::getInstance()->getCrateManager()->getRandomItemFromCrate("mage", $damager->getName(), $this);
+        if (!$source instanceof EntityDamageByEntityEvent) return;
+        $damager = $source->getDamager();
+        if (!$damager instanceof Player) return;
+        if ($damager->getInventory()->getItemInHand()->getTypeId() === VanillaItems::DIAMOND_SWORD()->getTypeId()) {
+            if (!$damager->hasPermission("box.dell")) return;
+            $this->flagForDespawn();
+            return;
+        } else {
+            $meeting = MeetingManager::getInstance()->getMeeting($damager)->getCratesData();
 
-                    $meeting = MeetingManager::getInstance()->getMeeting($damager)->getCratesData();
-
-                    if ($meeting->getKeyMage() > 0) {
-                        $meeting->reduceKeyMage();
-                        Main::getInstance()->getCrateManager()->getRandomItemFromCrate("mage", $damager->getName(), $this);
-                    } else {
-                        $damager->sendMessage("§cAl parecer no tienes keys!");
-                    }
-                }
+            if ($meeting->getKeyMage() > 0) {
+                $meeting->reduceKeyMage();
+                Main::getInstance()->getCrateManager()->getRandomItemFromCrate("mage", $damager->getName(), $this);
+            } else {
+                $msg = LangManager::getInstance()->generateMsg("no-keys", [], []);
+                $damager->sendMessage($msg);
             }
         }
     }

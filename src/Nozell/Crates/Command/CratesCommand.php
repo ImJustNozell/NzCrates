@@ -7,6 +7,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\lang\Translatable;
 use pocketmine\player\Player;
 use Nozell\Crates\Menu\MainMenu;
+use Nozell\Crates\Manager\LangManager;
 
 class CratesCommand extends Command
 {
@@ -19,8 +20,12 @@ class CratesCommand extends Command
 
     public function execute(CommandSender $sender, string $commandLabel, array $args)
     {
+        if (!$this->testPermission($sender)) {
+            return;
+        }
+
         if (!$sender instanceof Player) {
-            $sender->sendMessage("Este comando solo puede ser usado por jugadores");
+            $msg = LangManager::getInstance()->generateMsg("command-use-in-game", [], []);
             return;
         }
 

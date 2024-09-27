@@ -1,0 +1,8 @@
+{
+    "require": {
+        "pocketmine/pocketmine-mp": "^5.19",
+        "customiesdevs/customies": "dev-main",
+        "muqsit/invmenu": "^4.6",
+        "nozell/formsui": "^1.0"
+    }
+}

@@ -13,7 +13,7 @@ use Nozell\Crates\Main;
 use Nozell\Crates\Meetings\MeetingManager;
 use pocketmine\entity\Living;
 use Nozell\Crates\Manager\ParticleManager;
-use pocketmine\Server;
+use Nozell\Crates\Manager\LangManager;
 
 class PegasusBoxEntity extends Living
 {
@@ -51,39 +51,44 @@ class PegasusBoxEntity extends Living
 
     public function onUpdate(int $currentTick): bool
     {
-        $config = Main::getInstance()->getConfig();
         $pos = $this->getPosition();
         $world = $this->getWorld();
 
         $this->particleManager->sendParticles($world, $pos, 'villager');
 
-        $floatingText = $config->get("pegasusfloatingtext");
+        $floatingText = LangManager::getInstance()->generateMsg("pegasus-floating-text", [], []);
         $this->setNameTag($floatingText);
 
         return parent::onUpdate($currentTick);
     }
 
+
     public function attack(EntityDamageEvent $source): void
     {
         $source->cancel();
-        if ($source instanceof EntityDamageByEntityEvent) {
-            $damager = $source->getDamager();
-            if ($damager instanceof Player) {
-                if ($damager->getInventory()->getItemInHand()->getTypeId() === VanillaItems::DIAMOND_SWORD()->getTypeId()) {
-                    if ($damager->hasPermission("box.dell")) {
-                        $this->flagForDespawn();
-                        return;
-                    }
-                } else {
-                    $meeting = MeetingManager::getInstance()->getMeeting($damager)->getCratesData();
+        if (!$source instanceof EntityDamageByEntityEvent) return;
 
-                    if ($meeting->getKeyPegasus() > 0) {
-                        $meeting->reduceKeyPegasus();
-                        Main::getInstance()->getCrateManager()->getRandomItemFromCrate("pegasus", $damager->getName(), $this);
-                    } else {
-                        $damager->sendMessage("§cAl parecer no tienes keys!");
-                    }
-                }
+        $damager = $source->getDamager();
+
+        if (!$damager instanceof Player) return;
+
+        if ($damager->getInventory()->getItemInHand()->getTypeId() === VanillaItems::DIAMOND_SWORD()->getTypeId()) {
+
+            if (!$damager->hasPermission("box.dell")) return;
+            $this->flagForDespawn();
+
+            return;
+        } else {
+            $meeting = MeetingManager::getInstance()->getMeeting($damager)->getCratesData();
+
+            if ($meeting->getKeyPegasus() > 0) {
+
+                $meeting->reduceKeyPegasus();
+                Main::getInstance()->getCrateManager()->getRandomItemFromCrate("pegasus", $damager->getName(), $this);
+            } else {
+
+                $msg = LangManager::getInstance()->generateMsg("no-keys", [], []);
+                $damager->sendMessage($msg);
             }
         }
     }

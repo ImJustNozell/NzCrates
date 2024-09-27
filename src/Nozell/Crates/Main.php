@@ -8,7 +8,7 @@ use pocketmine\utils\Config;
 use Nozell\Crates\Command\CratesCommand;
 use Nozell\Crates\Entity\MageBoxEntity;
 use Nozell\Crates\Entity\PegasusBoxEntity;
-use Nozell\Crates\libs\muqsit\invmenu\InvMenuHandler;
+use muqsit\invmenu\InvMenuHandler;
 use Nozell\Crates\Entity\EnderBoxEntity;
 use Nozell\Crates\Entity\IceBoxEntity;
 use Nozell\Crates\Entity\MagmaBoxEntity;
@@ -38,6 +38,13 @@ class Main extends PluginBase implements Listener
         if (!InvMenuHandler::isRegistered()) {
             InvMenuHandler::register($this);
         }
+
+        $this->saveResource("lang\chinese.yml");
+        $this->saveResource('lang\english.yml');
+        $this->saveResource('lang\french.yml');
+        $this->saveResource("lang\japanese.yml");
+        $this->saveResource("lang\spanish.yml");
+        $this->saveResource('lang\turkish.yml');
 
         $this->saveDefaultConfig();
         $this->saveResource("Crates.mcpack");

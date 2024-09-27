@@ -8,8 +8,9 @@ use Nozell\Crates\Entity\EnderBoxEntity;
 use Nozell\Crates\Entity\PegasusBoxEntity;
 use Nozell\Crates\Entity\IceBoxEntity;
 use Nozell\Crates\Entity\MagmaBoxEntity;
-use Nozell\Crates\libs\FormAPI\CustomForm;
+use Vecnavium\FormsUI\CustomForm;
 use pocketmine\nbt\tag\CompoundTag;
+use Nozell\Crates\Manager\LangManager;
 
 class SpawnBoxMenu extends CustomForm
 {
@@ -18,12 +19,14 @@ class SpawnBoxMenu extends CustomForm
 
     public function __construct(Player $player)
     {
-        parent::__construct(null);
+        parent::__construct(function (Player $player, $data) {
+            $this->handleResponse($player, $data);
+        });
 
         $this->crateTypes = ["mage", "ice", "ender", "magma", "pegasus"];
 
-        $this->setTitle("Spawnear Crate");
-        $this->addDropdown("Selecciona el tipo de crate", $this->crateTypes);
+        $this->setTitle(LangManager::getInstance()->generateMsg('form-title-spawn-crate', [], []));
+        $this->addDropdown(LangManager::getInstance()->generateMsg('form-dropdown-crate-type', [], []), $this->crateTypes);
 
         $player->sendForm($this);
     }
@@ -31,7 +34,7 @@ class SpawnBoxMenu extends CustomForm
     public function handleResponse(Player $player, $data): void
     {
         if ($data === null || !isset($this->crateTypes[$data[0]])) {
-            $player->sendMessage("§cDatos inválidos proporcionados.");
+            $player->sendMessage(LangManager::getInstance()->generateMsg('invalid-data', [], []));
             return;
         }
 
@@ -55,6 +58,6 @@ class SpawnBoxMenu extends CustomForm
                 break;
         }
 
-        $player->sendMessage("§aCrate '$crateType' spawneada en tu ubicación actual.");
+        $player->sendMessage(LangManager::getInstance()->generateMsg('crate-spawned', ['{crateType}'], [$crateType]));
     }
 }

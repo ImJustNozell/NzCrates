@@ -8,6 +8,7 @@ use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
 use Nozell\Crates\Utils\CratesUtils;
 use Nozell\Crates\Data\CratesData;
+use Nozell\Crates\Manager\LangManager;
 
 final class Meeting
 {
@@ -37,20 +38,24 @@ final class Meeting
 
     public function join(): void
     {
-
         $player = $this->player;
-        $player->sendMessage(TextFormat::colorize('&aCargando Tus Datos ...'));
+        $loadingMessage = LangManager::getInstance()->generateMsg('data-loading', [], []);
+        $player->sendMessage(TextFormat::colorize($loadingMessage));
+
         $this->CratesData->setKeyMage(CratesUtils::getKeyBox($player, "mage"));
         $this->CratesData->setKeyIce(CratesUtils::getKeyBox($player, "ice"));
         $this->CratesData->setKeyEnder(CratesUtils::getKeyBox($player, "ender"));
         $this->CratesData->setKeyMagma(CratesUtils::getKeyBox($player, "magma"));
         $this->CratesData->setKeyPegasus(CratesUtils::getKeyBox($player, "pegasus"));
-        $player->sendMessage(TextFormat::colorize('&aDatos cargados correctamente'));
+
+        $loadedMessage = LangManager::getInstance()->generateMsg('data-loaded', [], []);
+        $player->sendMessage(TextFormat::colorize($loadedMessage));
     }
 
     public function Close(bool $onClose = false): void
     {
         $player = $this->player;
+
         CratesUtils::setKeyBox($player, "mage", $this->CratesData->getKeyMage());
         CratesUtils::setKeyBox($player, "ice", $this->CratesData->getKeyIce());
         CratesUtils::setKeyBox($player, "ender", $this->CratesData->getKeyEnder());

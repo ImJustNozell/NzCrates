@@ -4,9 +4,9 @@ namespace Nozell\Crates\Menu;
 
 use pocketmine\player\Player;
 use pocketmine\Server;
-use Nozell\Crates\Main;
 use Nozell\Crates\Meetings\MeetingManager;
-use Nozell\Crates\libs\FormAPI\CustomForm;
+use Vecnavium\FormsUI\CustomForm;
+use Nozell\Crates\Manager\LangManager;
 
 final class GiveAllKeyMenu extends CustomForm
 {
@@ -15,20 +15,24 @@ final class GiveAllKeyMenu extends CustomForm
 
     public function __construct(Player $player)
     {
-        parent::__construct(null);
-
         $this->keyTypes = ["mage", "ice", "ender", "magma", "pegasus"];
 
-        $this->setTitle("Dar Keys a Todos");
-        $this->addDropdown("Selecciona el tipo de key", $this->keyTypes);
-        $this->addInput("Cantidad", "Ingresa la cantidad de keys");
-        $player->sendForm($this);
+        $form = new CustomForm(function (Player $player, $data) {
+            $this->handleResponse($player, $data);
+        });
+
+        $form->setTitle(LangManager::getInstance()->generateMsg('form-title', [], []));
+        $form->addDropdown(LangManager::getInstance()->generateMsg('form-dropdown', [], []), $this->keyTypes);
+        $form->addInput(LangManager::getInstance()->generateMsg('form-input', [], []), LangManager::getInstance()->generateMsg('form-input-placeholder', [], []));
+
+        $player->sendForm($form);
     }
 
     public function handleResponse(Player $player, $data): void
     {
         if ($data === null || !isset($this->keyTypes[$data[0]]) || $data[1] === '' || $data[1] <= 0 || !ctype_digit($data[1])) {
-            $player->sendMessage("§cDatos inválidos proporcionados.");
+            $msg = LangManager::getInstance()->generateMsg('invalid-data', [], []);
+            $player->sendMessage($msg);
             return;
         }
 
@@ -44,12 +48,14 @@ final class GiveAllKeyMenu extends CustomForm
                 "ender" => $meeting->addKeyEnder($amount),
                 "magma" => $meeting->addKeyMagma($amount),
                 "pegasus" => $meeting->addKeyPegasus($amount),
-                default => $player->sendMessage("§cTipo de key desconocido.")
+                default => $player->sendMessage(LangManager::getInstance()->generateMsg('unknown-key-type', [], []))
             };
 
-            $onlinePlayer->sendMessage("§bHas recibido §e{$amount} keys de tipo {$keyType}");
+            $msg = LangManager::getInstance()->generateMsg('received-keys', ['{amount}', '{keyType}'], [$amount, $keyType]);
+            $onlinePlayer->sendMessage($msg);
         }
 
-        $player->sendMessage("§aHas dado exitosamente §e{$amount} keys de tipo {$keyType} §aa todos los jugadores en línea.");
+        $msg = LangManager::getInstance()->generateMsg('given-keys', ['{amount}', '{keyType}'], [$amount, $keyType]);
+        $player->sendMessage($msg);
     }
 }
