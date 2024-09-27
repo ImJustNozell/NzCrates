@@ -19,30 +19,13 @@
 
 ## 💾 Configuración
 ```yaml
-# Textos flotantes para Crates
-# Descomenta la versión en español y comenta la versión en inglés si prefieres español.
-
-magefloatingtext: "§l§bMageCrate\n§eVenture into magic!"
-# magefloatingtext: "§l§bMageCrate\n§e¡Aventúrate en la magia!"
-
-icefloatingtext: "§l§bIceCrate\n§eExplore the frozen tundra!"
-# icefloatingtext: "§l§bIceCrate\n§e¡Explora la fría tundra!"
-
-enderfloatingtext: "§l§bEnderCrate\n§eUnleash the power of the End!"
-# enderfloatingtext: "§l§bEnderCrate\n§e¡Desata el poder del End!"
-
-magmafloatingtext: "§l§bMagmaCrate\n§eFeel the heat of magma!"
-# magmafloatingtext: "§l§bMagmaCrate\n§e¡Siente el calor del magma!"
-
-pegasusfloatingtext: "§l§bPegasusCrate\n§eSoar high with Pegasus!"
-# pegasusfloatingtext: "§l§bPegasusCrate\n§e¡Vuela alto con Pegasus!"
-
-# Mensajes de ganancia de ítem
-won_item: "&e{userName} &aCongratulations! You have won&e {itemName}"
-# won_item: "&e{userName} &a¡Felicidades! Has ganado&e {itemName}"
-
-won_alert: "&6{userName} &ahas won an item&7:&e {itemName} &ain the crate&7:&e {crateName}."
-# won_alert: "&6{userName} &aha ganado un ítem&7:&e {itemName} &aen la crate&7:&e {crateName}."
+#"es" => "spanish"
+#"en" => "english"
+#"tr" => "turkish"
+#"zh" => "chinese"
+#"ja" => "japanese"
+#"fr" => "french"
+language: "es"
 ```
 
 ---
