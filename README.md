@@ -1,6 +1,6 @@
----
+# 🎁 NzCrates Plugin | **ES** | **EN**
 
- # 🎁 NzCrates Plugin | **ES** | **EN**
+---
 
 **ES**: **NzCrates** es un plugin para **PocketMine-MP** que te permite **crear** y **gestionar crates** (cajas de recompensas) con soporte para **entidades**, **animaciones** y **partículas**. ¡Todo es **editable** desde el juego utilizando ítems del mismo!  
 **EN**: **NzCrates** is a plugin for **PocketMine-MP** that allows you to **create** and **manage crates** (reward boxes) with support for **entities**, **animations**, and **particles**. Everything is **editable** directly in-game using items!
