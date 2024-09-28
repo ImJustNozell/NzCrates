@@ -47,7 +47,6 @@ final class Loader
     }
     public static function LoadLangs(): void
     {
-        LangManager::getInstance()->loadLangs();
         $main = Main::getInstance();
         $main->saveResource("lang\chinese.yml");
         $main->saveResource('lang\english.yml');
@@ -55,6 +54,7 @@ final class Loader
         $main->saveResource("lang\japanese.yml");
         $main->saveResource("lang\spanish.yml");
         $main->saveResource('lang\turkish.yml');
+        LangManager::getInstance()->loadLangs();
     }
 
     public static function RegisterEntities(): void
