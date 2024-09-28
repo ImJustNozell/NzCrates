@@ -6,6 +6,7 @@ use pocketmine\player\Player;
 use Nozell\Crates\Main;
 use Vecnavium\FormsUI\CustomForm;
 use muqsit\invmenu\InvMenu;
+use Nozell\Crates\Manager\CrateManager;
 use pocketmine\inventory\Inventory;
 use Nozell\Crates\Manager\LangManager;
 
@@ -45,7 +46,7 @@ class SetItemsMenu extends CustomForm
         $menu = InvMenu::create(InvMenu::TYPE_DOUBLE_CHEST);
         $menu->setName(LangManager::getInstance()->generateMsg('crate-title', ['{crateType}'], [ucfirst($crateType)]));
 
-        $crateManager = Main::getInstance()->getCrateManager();
+        $crateManager = CrateManager::getInstance();
         $items = $crateManager->getCrateItems($crateType);
 
         $inventory = $menu->getInventory();
@@ -54,7 +55,7 @@ class SetItemsMenu extends CustomForm
         }
 
         $menu->setInventoryCloseListener(function (Player $player, Inventory $inventory) use ($crateType): void {
-            $crateManager = Main::getInstance()->getCrateManager();
+            $crateManager = CrateManager::getInstance();
             $crateItems = [];
 
             foreach ($inventory->getContents() as $item) {

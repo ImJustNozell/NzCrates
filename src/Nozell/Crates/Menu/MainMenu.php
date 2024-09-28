@@ -5,6 +5,7 @@ namespace Nozell\Crates\Menu;
 use pocketmine\player\Player;
 use Vecnavium\FormsUI\SimpleForm;
 use Nozell\Crates\Manager\LangManager;
+use Nozell\Crates\Utils\Perms;
 
 class MainMenu extends SimpleForm
 {
@@ -35,35 +36,35 @@ class MainMenu extends SimpleForm
 
         switch ($data) {
             case 0:
-                if ($player->hasPermission("box.give.all")) {
+                if ($player->hasPermission(Perms::Admin)) {
                     new GiveAllKeyMenu($player);
                 } else {
                     $player->sendMessage(LangManager::getInstance()->generateMsg('no-permission', [], []));
                 }
                 break;
             case 1:
-                if ($player->hasPermission("box.give")) {
+                if ($player->hasPermission(Perms::Admin)) {
                     new GiveKeyMenu($player);
                 } else {
                     $player->sendMessage(LangManager::getInstance()->generateMsg('no-permission', [], []));
                 }
                 break;
             case 2:
-                if ($player->hasPermission("keys.info")) {
+                if ($player->hasPermission(Perms::Default)) {
                     new KeyMenu($player);
                 } else {
                     $player->sendMessage(LangManager::getInstance()->generateMsg('no-permission', [], []));
                 }
                 break;
             case 3:
-                if ($player->hasPermission("box.spawn")) {
+                if ($player->hasPermission(Perms::Admin)) {
                     new SetItemsMenu($player);
                 } else {
                     $player->sendMessage(LangManager::getInstance()->generateMsg('no-permission', [], []));
                 }
                 break;
             case 4:
-                if ($player->hasPermission("box.spawn")) {
+                if ($player->hasPermission(Perms::Admin)) {
                     new SpawnBoxMenu($player);
                 } else {
                     $player->sendMessage(LangManager::getInstance()->generateMsg('no-permission', [], []));

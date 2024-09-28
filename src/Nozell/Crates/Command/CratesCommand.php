@@ -8,6 +8,7 @@ use pocketmine\lang\Translatable;
 use pocketmine\player\Player;
 use Nozell\Crates\Menu\MainMenu;
 use Nozell\Crates\Manager\LangManager;
+use Nozell\Crates\Utils\Perms;
 
 class CratesCommand extends Command
 {
@@ -15,7 +16,7 @@ class CratesCommand extends Command
     public function __construct(string $name, Translatable|string $description = "", Translatable|string|null $usageMessage = null, array $aliases = [])
     {
         parent::__construct($name, $description, $usageMessage, $aliases);
-        $this->setPermission("crates.menu");
+        $this->setPermission(Perms::Default);
     }
 
     public function execute(CommandSender $sender, string $commandLabel, array $args)

@@ -10,14 +10,15 @@ use pocketmine\item\VanillaItems;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\player\Player;
 use Nozell\Crates\Main;
+use Nozell\Crates\Manager\CrateManager;
 use Nozell\Crates\Meetings\MeetingManager;
 use pocketmine\entity\Living;
 use Nozell\Crates\Manager\ParticleManager;
 use Nozell\Crates\Manager\LangManager;
+use Nozell\Crates\Utils\Perms;
 
 class MagmaBoxEntity extends Living
 {
-
     private ParticleManager $particleManager;
 
     public function __construct(Location $location, ?CompoundTag $nbt = null)
@@ -66,11 +67,17 @@ class MagmaBoxEntity extends Living
     public function attack(EntityDamageEvent $source): void
     {
         $source->cancel();
-        if (!$source instanceof EntityDamageByEntityEvent) return;
+        if (!$source instanceof EntityDamageByEntityEvent) {
+            return;
+        }
         $damager = $source->getDamager();
-        if (!$damager instanceof Player) return;
+        if (!$damager instanceof Player) {
+            return;
+        }
         if ($damager->getInventory()->getItemInHand()->getTypeId() === VanillaItems::DIAMOND_SWORD()->getTypeId()) {
-            if (!$damager->hasPermission("box.dell")) return;
+            if (!$damager->hasPermission(Perms::Admin)) {
+                return;
+            }
             $this->flagForDespawn();
             return;
         } else {
@@ -78,7 +85,7 @@ class MagmaBoxEntity extends Living
 
             if ($meeting->getKeyMagma() > 0) {
                 $meeting->reduceKeyMagma();
-                Main::getInstance()->getCrateManager()->getRandomItemFromCrate("magma", $damager->getName(), $this);
+                CrateManager::getInstance()->getRandomItemFromCrate("magma", $damager->getName(), $this);
             } else {
                 $msg = LangManager::getInstance()->generateMsg("no-keys", [], []);
                 $damager->sendMessage($msg);

@@ -5,7 +5,7 @@ namespace Nozell\Crates\Entity;
 use pocketmine\entity\EntitySizeInfo;
 use pocketmine\entity\Location;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
-use Nozell\Crates\Main;
+use Nozell\Crates\Manager\CrateManager;
 use pocketmine\item\VanillaItems;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\player\Player;
@@ -14,6 +14,7 @@ use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\entity\Living;
 use Nozell\Crates\Manager\ParticleManager;
 use Nozell\Crates\Manager\LangManager;
+use Nozell\Crates\Utils\Perms;
 
 class EnderBoxEntity extends Living
 {
@@ -71,7 +72,7 @@ class EnderBoxEntity extends Living
         if (!$damager instanceof Player) return;
 
         if ($damager->getInventory()->getItemInHand()->getTypeId() === VanillaItems::DIAMOND_SWORD()->getTypeId()) {
-            if (!$damager->hasPermission("box.dell")) return;
+            if (!$damager->hasPermission(Perms::Admin)) return;
             $this->flagForDespawn();
             return;
         } else {
@@ -79,7 +80,7 @@ class EnderBoxEntity extends Living
 
             if ($meeting->getKeyEnder() > 0) {
                 $meeting->reduceKeyEnder();
-                Main::getInstance()->getCrateManager()->getRandomItemFromCrate("ender", $damager->getName(), $this);
+                CrateManager::getInstance()->getRandomItemFromCrate("ender", $damager->getName(), $this);
             } else {
                 $msg = LangManager::getInstance()->generateMsg("no-keys", [], []);
                 $damager->sendMessage($msg);

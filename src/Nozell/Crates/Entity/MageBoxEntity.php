@@ -11,9 +11,11 @@ use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\player\Player;
 use pocketmine\entity\Living;
 use Nozell\Crates\Main;
+use Nozell\Crates\Manager\CrateManager;
 use Nozell\Crates\Meetings\MeetingManager;
 use Nozell\Crates\Manager\ParticleManager;
 use Nozell\Crates\Manager\LangManager;
+use Nozell\Crates\Utils\Perms;
 
 class MageBoxEntity extends Living
 {
@@ -70,7 +72,7 @@ class MageBoxEntity extends Living
         $damager = $source->getDamager();
         if (!$damager instanceof Player) return;
         if ($damager->getInventory()->getItemInHand()->getTypeId() === VanillaItems::DIAMOND_SWORD()->getTypeId()) {
-            if (!$damager->hasPermission("box.dell")) return;
+            if (!$damager->hasPermission(Perms::Admin)) return;
             $this->flagForDespawn();
             return;
         } else {
@@ -78,7 +80,7 @@ class MageBoxEntity extends Living
 
             if ($meeting->getKeyMage() > 0) {
                 $meeting->reduceKeyMage();
-                Main::getInstance()->getCrateManager()->getRandomItemFromCrate("mage", $damager->getName(), $this);
+                CrateManager::getInstance()->getRandomItemFromCrate("mage", $damager->getName(), $this);
             } else {
                 $msg = LangManager::getInstance()->generateMsg("no-keys", [], []);
                 $damager->sendMessage($msg);

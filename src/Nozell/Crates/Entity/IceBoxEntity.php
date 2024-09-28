@@ -10,10 +10,12 @@ use pocketmine\item\VanillaItems;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\player\Player;
 use Nozell\Crates\Main;
+use Nozell\Crates\Manager\CrateManager;
 use Nozell\Crates\Meetings\MeetingManager;
 use pocketmine\entity\Living;
 use Nozell\Crates\Manager\ParticleManager;
 use Nozell\Crates\Manager\LangManager;
+use Nozell\Crates\Utils\Perms;
 
 class IceBoxEntity extends Living
 {
@@ -68,7 +70,7 @@ class IceBoxEntity extends Living
         $damager = $source->getDamager();
         if (!$damager instanceof Player) return;
         if ($damager->getInventory()->getItemInHand()->getTypeId() === VanillaItems::DIAMOND_SWORD()->getTypeId()) {
-            if (!$damager->hasPermission("box.dell")) return;
+            if (!$damager->hasPermission(Perms::Admin)) return;
             $this->flagForDespawn();
             return;
         } else {
@@ -76,7 +78,7 @@ class IceBoxEntity extends Living
 
             if ($meeting->getKeyIce() > 0) {
                 $meeting->reduceKeyIce();
-                Main::getInstance()->getCrateManager()->getRandomItemFromCrate("ice", $damager->getName(), $this);
+                CrateManager::getInstance()->getRandomItemFromCrate("ice", $damager->getName(), $this);
             } else {
                 $msg = LangManager::getInstance()->generateMsg("no-keys", [], []);
                 $damager->sendMessage($msg);

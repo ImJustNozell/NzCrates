@@ -13,11 +13,13 @@ use Nozell\Crates\Utils\SoundEffect;
 use pocketmine\Server;
 use Nozell\Crates\Main;
 use Nozell\Crates\Manager\LangManager;
+use pocketmine\utils\SingletonTrait;
 
 class CrateManager
 {
     use LavaParticleEffect;
     use SoundEffect;
+    use SingletonTrait;
 
     public Config $crateData;
 

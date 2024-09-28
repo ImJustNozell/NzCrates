@@ -19,7 +19,6 @@ final class CratesUtils
     {
 
         return (int) self::getConfig($type)->get($player->getName(), 0);
-        return Main::RET_SUCCESS;
     }
 
     public static function setKeyBox(Player $player, string $type, int $amount): void
