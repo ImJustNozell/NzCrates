@@ -24,12 +24,12 @@
 ## 💾 Configuración | **Configuration**
 
 ```yaml
-"es" => "spanish"
-"en" => "english"
-"tr" => "turkish"
-"zh" => "chinese"
-"ja" => "japanese"
-"fr" => "french"
+#"es" = "spanish"
+#"en" = "english"
+#"tr" = "turkish"
+#"zh" = "chinese"
+#"ja" = "japanese"
+#"fr" = "french"
 language: "es"
 ```
 
