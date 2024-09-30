@@ -6,6 +6,7 @@
         "nozell/formsui": "^1.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.64"
+        "friendsofphp/php-cs-fixer": "^3.64",
+        "phpstan/phpstan": "^1.12"
     }
 }
