@@ -14,7 +14,6 @@ use Nozell\Crates\Manager\LangManager;
 
 class SpawnBoxMenu extends CustomForm
 {
-
     private array $crateTypes;
 
     public function __construct(Player $player)
@@ -25,8 +24,21 @@ class SpawnBoxMenu extends CustomForm
 
         $this->crateTypes = ["mage", "ice", "ender", "magma", "pegasus"];
 
-        $this->setTitle(LangManager::getInstance()->generateMsg('form-title-spawn-crate', [], []));
-        $this->addDropdown(LangManager::getInstance()->generateMsg('form-dropdown-crate-type', [], []), $this->crateTypes);
+        $this->setTitle(
+            LangManager::getInstance()->generateMsg(
+                "form-title-spawn-crate",
+                [],
+                []
+            )
+        );
+        $this->addDropdown(
+            LangManager::getInstance()->generateMsg(
+                "form-dropdown-crate-type",
+                [],
+                []
+            ),
+            $this->crateTypes
+        );
 
         $player->sendForm($this);
     }
@@ -34,7 +46,9 @@ class SpawnBoxMenu extends CustomForm
     public function handleResponse(Player $player, $data): void
     {
         if ($data === null || !isset($this->crateTypes[$data[0]])) {
-            $player->sendMessage(LangManager::getInstance()->generateMsg('invalid-data', [], []));
+            $player->sendMessage(
+                LangManager::getInstance()->generateMsg("invalid-data", [], [])
+            );
             return;
         }
 
@@ -58,6 +72,12 @@ class SpawnBoxMenu extends CustomForm
                 break;
         }
 
-        $player->sendMessage(LangManager::getInstance()->generateMsg('crate-spawned', ['{crateType}'], [$crateType]));
+        $player->sendMessage(
+            LangManager::getInstance()->generateMsg(
+                "crate-spawned",
+                ["{crateType}"],
+                [$crateType]
+            )
+        );
     }
 }

@@ -7,7 +7,6 @@ use pocketmine\player\Player;
 
 class CooldownTask extends Task
 {
-
     private Player $player;
     private array $steps;
     private int $currentIndex;
@@ -28,8 +27,10 @@ class CooldownTask extends Task
 
         $step = $this->steps[$this->currentIndex--];
 
-        if (empty($step['actions']) || !is_array($step['actions'])) return;
+        if (empty($step["actions"]) || !is_array($step["actions"])) {
+            return;
+        }
 
-        array_walk($step['actions'], fn($action) => $action($this->player));
+        array_walk($step["actions"], fn($action) => $action($this->player));
     }
 }

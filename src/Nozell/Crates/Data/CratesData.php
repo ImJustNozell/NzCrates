@@ -8,7 +8,6 @@ use Nozell\Crates\Meetings\Meeting;
 
 final class CratesData
 {
-
     public function __construct(
         private readonly Meeting $meeting,
         private int $keyMage = 0,

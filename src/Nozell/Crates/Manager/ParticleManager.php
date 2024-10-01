@@ -15,35 +15,74 @@ final class ParticleManager
     private int $particleCounter = 0;
     private int $lastParticleTime = 0;
 
-    public function sendParticles(World $w, Vector3 $p, string $type = 'fire', int $tick = 0): void
-    {
+    public function sendParticles(
+        World $w,
+        Vector3 $p,
+        string $type = "fire",
+        int $tick = 0
+    ): void {
         switch ($type) {
-            case 'fire':
-                $this->setHorario($w, $p, new DustParticle(new Color(255, 165, 0)));
-                $this->setAntiHorario($w, $p, new DustParticle(new Color(255, 255, 0)));
+            case "fire":
+                $this->setHorario(
+                    $w,
+                    $p,
+                    new DustParticle(new Color(255, 165, 0))
+                );
+                $this->setAntiHorario(
+                    $w,
+                    $p,
+                    new DustParticle(new Color(255, 255, 0))
+                );
                 break;
-            case 'enchantment':
-                $this->setHorario($w, $p, new DustParticle(new Color(128, 0, 128)));
-                $this->setAntiHorario($w, $p, new DustParticle(new Color(128, 128, 128)));
+            case "enchantment":
+                $this->setHorario(
+                    $w,
+                    $p,
+                    new DustParticle(new Color(128, 0, 128))
+                );
+                $this->setAntiHorario(
+                    $w,
+                    $p,
+                    new DustParticle(new Color(128, 128, 128))
+                );
                 break;
-            case 'villager':
-                $this->setHorario($w, $p, new DustParticle(new Color(255, 255, 0)));
-                $this->setAntiHorario($w, $p, new DustParticle(new Color(255, 255, 255)));
+            case "villager":
+                $this->setHorario(
+                    $w,
+                    $p,
+                    new DustParticle(new Color(255, 255, 0))
+                );
+                $this->setAntiHorario(
+                    $w,
+                    $p,
+                    new DustParticle(new Color(255, 255, 255))
+                );
                 break;
-            case 'enderman_teleport':
+            case "enderman_teleport":
                 $this->sendEndermanTeleportParticles($w, $p, $tick);
                 break;
-            case 'ice':
-                $this->setHorario($w, $p, new DustParticle(new Color(255, 255, 255)));
-                $this->setAntiHorario($w, $p, new DustParticle(new Color(173, 216, 230))); // Celeste
+            case "ice":
+                $this->setHorario(
+                    $w,
+                    $p,
+                    new DustParticle(new Color(255, 255, 255))
+                );
+                $this->setAntiHorario(
+                    $w,
+                    $p,
+                    new DustParticle(new Color(173, 216, 230))
+                ); // Celeste
                 break;
             default:
                 break;
         }
     }
 
-    public function setHorario(World $w, Vector3 $p, DustParticle $particle): void
-    {
+    public function setHorario(
+        World $w,
+        Vector3 $p,
+        DustParticle $particle
+    ): void {
         $size = 0.6;
         $x = $p->getX() + cos(deg2rad($this->particleCounter / 0.1)) * $size;
         $y = $p->getY() + 1.5;
@@ -55,8 +94,11 @@ final class ParticleManager
         $this->incrementParticleCounter();
     }
 
-    public function setAntiHorario(World $w, Vector3 $p, DustParticle $particle): void
-    {
+    public function setAntiHorario(
+        World $w,
+        Vector3 $p,
+        DustParticle $particle
+    ): void {
         $size = 0.6;
         $x = $p->getX() - cos(deg2rad($this->particleCounter / 0.1)) * $size;
         $y = $p->getY() + 1.5;
@@ -68,8 +110,11 @@ final class ParticleManager
         $this->incrementParticleCounter();
     }
 
-    private function sendEndermanTeleportParticles(World $w, Vector3 $p, int $tick): void
-    {
+    private function sendEndermanTeleportParticles(
+        World $w,
+        Vector3 $p,
+        int $tick
+    ): void {
         if ($tick > $this->lastParticleTime + 25) {
             $pos = $p->add(0, 1, 0);
             $w->addParticle($pos, new EndermanTeleportParticle());

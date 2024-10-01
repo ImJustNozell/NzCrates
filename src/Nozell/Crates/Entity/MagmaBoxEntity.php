@@ -15,7 +15,8 @@ use Nozell\Crates\Meetings\MeetingManager;
 use pocketmine\entity\Living;
 use Nozell\Crates\Manager\ParticleManager;
 use Nozell\Crates\Manager\LangManager;
-use Nozell\Crates\Utils\Perms;
+use Nozell\Crates\tags\EntityIds;
+use Nozell\Crates\tags\Perms;
 
 class MagmaBoxEntity extends Living
 {
@@ -37,7 +38,7 @@ class MagmaBoxEntity extends Living
 
     public static function getNetworkTypeId(): string
     {
-        return "crates:dark_magma";
+        return EntityIds::Magma;
     }
 
     protected function getInitialSizeInfo(): EntitySizeInfo
@@ -55,14 +56,17 @@ class MagmaBoxEntity extends Living
         $pos = $this->getPosition();
         $world = $this->getWorld();
 
-        $this->particleManager->sendParticles($world, $pos, 'fire');
+        $this->particleManager->sendParticles($world, $pos, "fire");
 
-        $floatingText = LangManager::getInstance()->generateMsg("magma-floating-text", [], []);
+        $floatingText = LangManager::getInstance()->generateMsg(
+            "magma-floating-text",
+            [],
+            []
+        );
         $this->setNameTag($floatingText);
 
         return parent::onUpdate($currentTick);
     }
-
 
     public function attack(EntityDamageEvent $source): void
     {
@@ -74,20 +78,35 @@ class MagmaBoxEntity extends Living
         if (!$damager instanceof Player) {
             return;
         }
-        if ($damager->getInventory()->getItemInHand()->getTypeId() === VanillaItems::DIAMOND_SWORD()->getTypeId()) {
+        if (
+            $damager
+            ->getInventory()
+            ->getItemInHand()
+            ->getTypeId() === VanillaItems::DIAMOND_SWORD()->getTypeId()
+        ) {
             if (!$damager->hasPermission(Perms::Admin)) {
                 return;
             }
             $this->flagForDespawn();
             return;
         } else {
-            $meeting = MeetingManager::getInstance()->getMeeting($damager)->getCratesData();
+            $meeting = MeetingManager::getInstance()
+                ->getMeeting($damager)
+                ->getCratesData();
 
             if ($meeting->getKeyMagma() > 0) {
                 $meeting->reduceKeyMagma();
-                CrateManager::getInstance()->getRandomItemFromCrate("magma", $damager->getName(), $this);
+                CrateManager::getInstance()->getRandomItemFromCrate(
+                    "magma",
+                    $damager->getName(),
+                    $this
+                );
             } else {
-                $msg = LangManager::getInstance()->generateMsg("no-keys", [], []);
+                $msg = LangManager::getInstance()->generateMsg(
+                    "no-keys",
+                    [],
+                    []
+                );
                 $damager->sendMessage($msg);
             }
         }

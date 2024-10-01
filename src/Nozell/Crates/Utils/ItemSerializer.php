@@ -12,7 +12,9 @@ final class ItemSerializer
     public static function serialize(Item $item): string
     {
         $nbtHandler = new BigEndianNbtSerializer();
-        $serializedData = $nbtHandler->write(new TreeRoot($item->nbtSerialize()));
+        $serializedData = $nbtHandler->write(
+            new TreeRoot($item->nbtSerialize())
+        );
         return self::sanitizeString($serializedData);
     }
 
@@ -26,11 +28,13 @@ final class ItemSerializer
         }
 
         $nbtHandler = new BigEndianNbtSerializer();
-        return Item::nbtDeserialize($nbtHandler->read($cleanData)->mustGetCompoundTag());
+        return Item::nbtDeserialize(
+            $nbtHandler->read($cleanData)->mustGetCompoundTag()
+        );
     }
 
     private static function sanitizeString(string $data): string
     {
-        return mb_convert_encoding($data, 'UTF-8', 'UTF-8');
+        return mb_convert_encoding($data, "UTF-8", "UTF-8");
     }
 }

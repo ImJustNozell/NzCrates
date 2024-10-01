@@ -12,7 +12,6 @@ use Nozell\Crates\Manager\LangManager;
 
 class SetItemsMenu extends CustomForm
 {
-
     private array $crateTypes;
 
     public function __construct(Player $player)
@@ -23,8 +22,21 @@ class SetItemsMenu extends CustomForm
 
         $this->crateTypes = ["mage", "ice", "ender", "magma", "pegasus"];
 
-        $this->setTitle(LangManager::getInstance()->generateMsg('form-title-set-items', [], []));
-        $this->addDropdown(LangManager::getInstance()->generateMsg('form-dropdown-crate-type', [], []), $this->crateTypes);
+        $this->setTitle(
+            LangManager::getInstance()->generateMsg(
+                "form-title-set-items",
+                [],
+                []
+            )
+        );
+        $this->addDropdown(
+            LangManager::getInstance()->generateMsg(
+                "form-dropdown-crate-type",
+                [],
+                []
+            ),
+            $this->crateTypes
+        );
 
         $player->sendForm($this);
     }
@@ -32,7 +44,9 @@ class SetItemsMenu extends CustomForm
     public function handleResponse(Player $player, $data): void
     {
         if ($data === null || !isset($this->crateTypes[$data[0]])) {
-            $player->sendMessage(LangManager::getInstance()->generateMsg('invalid-data', [], []));
+            $player->sendMessage(
+                LangManager::getInstance()->generateMsg("invalid-data", [], [])
+            );
             return;
         }
 
@@ -44,7 +58,13 @@ class SetItemsMenu extends CustomForm
     public function openCrateMenu(Player $player, string $crateType): void
     {
         $menu = InvMenu::create(InvMenu::TYPE_DOUBLE_CHEST);
-        $menu->setName(LangManager::getInstance()->generateMsg('crate-title', ['{crateType}'], [ucfirst($crateType)]));
+        $menu->setName(
+            LangManager::getInstance()->generateMsg(
+                "crate-title",
+                ["{crateType}"],
+                [ucfirst($crateType)]
+            )
+        );
 
         $crateManager = CrateManager::getInstance();
         $items = $crateManager->getCrateItems($crateType);
@@ -54,7 +74,10 @@ class SetItemsMenu extends CustomForm
             $inventory->addItem($item);
         }
 
-        $menu->setInventoryCloseListener(function (Player $player, Inventory $inventory) use ($crateType): void {
+        $menu->setInventoryCloseListener(function (
+            Player $player,
+            Inventory $inventory
+        ) use ($crateType): void {
             $crateManager = CrateManager::getInstance();
             $crateItems = [];
 
@@ -63,7 +86,13 @@ class SetItemsMenu extends CustomForm
             }
 
             $crateManager->addCrateItems($crateType, $crateItems);
-            $player->sendMessage(LangManager::getInstance()->generateMsg('items-saved', ['{crateType}'], [$crateType]));
+            $player->sendMessage(
+                LangManager::getInstance()->generateMsg(
+                    "items-saved",
+                    ["{crateType}"],
+                    [$crateType]
+                )
+            );
         });
 
         $menu->send($player);

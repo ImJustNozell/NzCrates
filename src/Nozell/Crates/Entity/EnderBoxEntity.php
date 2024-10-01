@@ -14,11 +14,11 @@ use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\entity\Living;
 use Nozell\Crates\Manager\ParticleManager;
 use Nozell\Crates\Manager\LangManager;
-use Nozell\Crates\Utils\Perms;
+use Nozell\Crates\tags\EntityIds;
+use Nozell\Crates\tags\Perms;
 
 class EnderBoxEntity extends Living
 {
-
     private ParticleManager $particleManager;
 
     public function __construct(Location $location, ?CompoundTag $nbt = null)
@@ -38,7 +38,7 @@ class EnderBoxEntity extends Living
 
     public static function getNetworkTypeId(): string
     {
-        return "crates:grand_ender_chest";
+        return EntityIds::Ender;
     }
 
     protected function getInitialSizeInfo(): EntitySizeInfo
@@ -56,9 +56,18 @@ class EnderBoxEntity extends Living
         $pos = $this->getPosition();
         $world = $this->getWorld();
 
-        $this->particleManager->sendParticles($world, $pos, 'enderman_teleport', $currentTick);
+        $this->particleManager->sendParticles(
+            $world,
+            $pos,
+            "enderman_teleport",
+            $currentTick
+        );
 
-        $floatingText = LangManager::getInstance()->generateMsg("ender-floating-text", [], []);
+        $floatingText = LangManager::getInstance()->generateMsg(
+            "ender-floating-text",
+            [],
+            []
+        );
         $this->setNameTag($floatingText);
 
         return parent::onUpdate($currentTick);
@@ -67,22 +76,43 @@ class EnderBoxEntity extends Living
     public function attack(EntityDamageEvent $source): void
     {
         $source->cancel();
-        if (!$source instanceof EntityDamageByEntityEvent) return;
+        if (!$source instanceof EntityDamageByEntityEvent) {
+            return;
+        }
         $damager = $source->getDamager();
-        if (!$damager instanceof Player) return;
+        if (!$damager instanceof Player) {
+            return;
+        }
 
-        if ($damager->getInventory()->getItemInHand()->getTypeId() === VanillaItems::DIAMOND_SWORD()->getTypeId()) {
-            if (!$damager->hasPermission(Perms::Admin)) return;
+        if (
+            $damager
+            ->getInventory()
+            ->getItemInHand()
+            ->getTypeId() === VanillaItems::DIAMOND_SWORD()->getTypeId()
+        ) {
+            if (!$damager->hasPermission(Perms::Admin)) {
+                return;
+            }
             $this->flagForDespawn();
             return;
         } else {
-            $meeting = MeetingManager::getInstance()->getMeeting($damager)->getCratesData();
+            $meeting = MeetingManager::getInstance()
+                ->getMeeting($damager)
+                ->getCratesData();
 
             if ($meeting->getKeyEnder() > 0) {
                 $meeting->reduceKeyEnder();
-                CrateManager::getInstance()->getRandomItemFromCrate("ender", $damager->getName(), $this);
+                CrateManager::getInstance()->getRandomItemFromCrate(
+                    "ender",
+                    $damager->getName(),
+                    $this
+                );
             } else {
-                $msg = LangManager::getInstance()->generateMsg("no-keys", [], []);
+                $msg = LangManager::getInstance()->generateMsg(
+                    "no-keys",
+                    [],
+                    []
+                );
                 $damager->sendMessage($msg);
             }
         }

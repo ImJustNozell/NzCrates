@@ -12,31 +12,39 @@ use Nozell\Crates\Entity\MagmaBoxEntity;
 use Nozell\Crates\Entity\PegasusBoxEntity;
 use Nozell\Crates\Listeners\EventListener;
 use Nozell\Crates\Manager\LangManager;
+use Nozell\Crates\tags\EntityIds;
 use pocketmine\resourcepacks\ZippedResourcePack;
 use pocketmine\Server;
 use Symfony\Component\Filesystem\Path;
 
 final class Loader
 {
+    public const Humanoid = "minecraft:humanoid";
+
     public static function LoadAll(): void
     {
         self::LoadInvmenu();
         self::LoadLangs();
         self::RegisterEntities();
 
-        Main::getInstance()->getServer()->getPluginManager()->registerEvents(
-            new EventListener(),
-            Main::getInstance()
-        );
+        Main::getInstance()
+            ->getServer()
+            ->getPluginManager()
+            ->registerEvents(
+                new EventListener(),
+                Main::getInstance()
+            );
 
-        Server::getInstance()->getCommandMap()->register(
-            "crates",
-            new CratesCommand(
+        Server::getInstance()
+            ->getCommandMap()
+            ->register(
                 "crates",
-                "Abre el menú principal de crates",
-                "/crates"
-            )
-        );
+                new CratesCommand(
+                    "crates",
+                    "Abre el menú principal de crates",
+                    "/crates"
+                )
+            );
     }
 
     public static function LoadInvmenu(): void
@@ -61,37 +69,36 @@ final class Loader
     {
         CustomiesEntityFactory::getInstance()->registerEntity(
             MageBoxEntity::class,
-            "crates:mage_chest",
-            null,
-            "minecraft:humanoid"
+            EntityIds::Mage,
+            null
         );
 
         CustomiesEntityFactory::getInstance()->registerEntity(
             IceBoxEntity::class,
-            "crates:ice_chest",
+            EntityIds::Ice,
             null,
-            "minecraft:humanoid"
+            self::Humanoid
         );
 
         CustomiesEntityFactory::getInstance()->registerEntity(
             EnderBoxEntity::class,
-            "crates:grand_ender_chest",
+            EntityIds::Ender,
             null,
-            "minecraft:humanoid"
+            self::Humanoid
         );
 
         CustomiesEntityFactory::getInstance()->registerEntity(
             MagmaBoxEntity::class,
-            "crates:dark_magma",
+            EntityIds::Magma,
             null,
-            "minecraft:humanoid"
+            self::Humanoid
         );
 
         CustomiesEntityFactory::getInstance()->registerEntity(
             PegasusBoxEntity::class,
-            "crates:golden_pegasus",
+            EntityIds::Pegasus,
             null,
-            "minecraft:humanoid"
+            self::Humanoid
         );
     }
 
@@ -100,11 +107,20 @@ final class Loader
         Main::getInstance()->saveResource("Crates.mcpack");
         $rpManager = Server::getInstance()->getResourcePackManager();
 
-        $rpManager->setResourceStack(array_merge(
-            $rpManager->getResourceStack(),
-            [new ZippedResourcePack(Path::join(Main::getInstance()->getDataFolder(), "Crates.mcpack"))]
-        ));
+        $rpManager->setResourceStack(
+            array_merge($rpManager->getResourceStack(), [
+                new ZippedResourcePack(
+                    Path::join(
+                        Main::getInstance()->getDataFolder(),
+                        "Crates.mcpack"
+                    )
+                ),
+            ])
+        );
 
-        (new \ReflectionProperty($rpManager, "serverForceResources"))->setValue($rpManager, true);
+        (new \ReflectionProperty($rpManager, "serverForceResources"))->setValue(
+            $rpManager,
+            true
+        );
     }
 }

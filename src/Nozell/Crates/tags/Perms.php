@@ -1,6 +1,6 @@
 <?php
 
-namespace Nozell\Crates\Utils;
+namespace Nozell\Crates\tags;
 
 final class Perms
 {

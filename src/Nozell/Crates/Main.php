@@ -7,8 +7,6 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
 use pocketmine\utils\SingletonTrait;
 
-use function array_merge;
-
 class Main extends PluginBase implements Listener
 {
     use SingletonTrait {
@@ -22,6 +20,8 @@ class Main extends PluginBase implements Listener
 
         Loader::LoadAll();
 
-        Server::getInstance()->getLogger()->debug("NzCrates enabling");
+        Server::getInstance()
+            ->getLogger()
+            ->debug("NzCrates enabling");
     }
 }
