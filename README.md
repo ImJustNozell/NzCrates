@@ -2,6 +2,12 @@
 
 ---
 
+![GitHub followers](https://img.shields.io/github/followers/imjustnozell) ![GitHub Repo stars](https://img.shields.io/github/stars/imjustnozell/nzcrates) ![GitHub language count](https://img.shields.io/github/languages/count/imjustnozell/nzcrates)
+![GitHub top language](https://img.shields.io/github/languages/top/imjustnozell/nzcrates)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/imjustnozell/nzcrates)
+![GitHub contributors](https://img.shields.io/github/contributors/imjustnozell/nzcrates)
+![GitHub Created At](https://img.shields.io/github/created-at/imjustnozell/nzcrates)
+
 **ES**: **NzCrates** es un plugin para **PocketMine-MP** que te permite **crear** y **gestionar crates** (cajas de recompensas) con soporte para **entidades**, **animaciones** y **partículas**. ¡Todo es **editable** desde el juego utilizando ítems del mismo!  
 **EN**: **NzCrates** is a plugin for **PocketMine-MP** that allows you to **create** and **manage crates** (reward boxes) with support for **entities**, **animations**, and **particles**. Everything is **editable** directly in-game using items!
 
@@ -38,16 +44,16 @@ language: "es"
 ## 🌟 Características | **Features**
 
 - **ES**: **Entidades personalizadas**: Utiliza **entidades personalizables** para representar tus crates.  
-**EN**: **Custom entities**: Use **customizable entities** to represent your crates.
+  **EN**: **Custom entities**: Use **customizable entities** to represent your crates.
 
 - **ES**: **Animaciones atractivas**: Añade **animaciones** llamativas a tus crates.  
-**EN**: **Attractive animations**: Add eye-catching **animations** to your crates.
+  **EN**: **Attractive animations**: Add eye-catching **animations** to your crates.
 
 - **ES**: **Efectos de partículas**: Mejora tus crates con **efectos de partículas**.  
-**EN**: **Particle effects**: Enhance your crates with **particle effects**.
+  **EN**: **Particle effects**: Enhance your crates with **particle effects**.
 
 - **ES**: **Editabilidad en el juego**: Configura y edita tus crates **directamente desde el juego** usando ítems.  
-**EN**: **In-game editing**: Configure and edit your crates **directly in-game** using items.
+  **EN**: **In-game editing**: Configure and edit your crates **directly in-game** using items.
 
 ---
 
@@ -55,7 +61,6 @@ language: "es"
 
 1. **ES**: **Descarga** el archivo `NzCrates` y colócalo en el directorio de **plugins** de tu servidor **PocketMine-MP**.  
    **EN**: **Download** the `NzCrates` file and place it in the **plugins** folder of your **PocketMine-MP** server.
-   
 2. **ES**: **Reinicia** tu servidor para cargar el plugin.  
    **EN**: **Restart** your server to load the plugin.
 
@@ -66,24 +71,24 @@ language: "es"
 ### `/crates`
 
 - **ES**: **Descripción**: Abre un **menú** para configurar y gestionar crates.  
-**EN**: **Description**: Opens a **menu** to configure and manage crates.
+  **EN**: **Description**: Opens a **menu** to configure and manage crates.
 
 - **ES**: **Uso**: `/crates`  
-**EN**: **Usage**: `/crates`
+  **EN**: **Usage**: `/crates`
 
 ---
 
 ## 🔑 Permisos | **Permissions**
 
 - **ES**: `nzcrates.default`: Permite usar el comando `/crates`. Este permiso está habilitado por **defecto para todos los jugadores**.  
-**EN**: `nzcrates.default`: Allows using the `/crates` command. This permission is **enabled for all players by default**.
+  **EN**: `nzcrates.default`: Allows using the `/crates` command. This permission is **enabled for all players by default**.
 
 ---
 
 ## 🛠️ Configuración en el juego | **In-Game Configuration**
 
 - **ES**: No necesitas editar manualmente los archivos de configuración. Usa el comando `/crates` para acceder a la configuración **directamente desde el juego**.  
-**EN**: You don’t need to manually edit configuration files. Use the `/crates` command to access the configuration **directly in-game**.
+  **EN**: You don’t need to manually edit configuration files. Use the `/crates` command to access the configuration **directly in-game**.
 
 ---
 
