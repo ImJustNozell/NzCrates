@@ -3,10 +3,10 @@
 namespace Nozell\Crates\Menu;
 
 use pocketmine\player\Player;
-use pocketmine\Server;
-use Nozell\Crates\Meetings\MeetingManager;
 use Vecnavium\FormsUI\CustomForm;
 use Nozell\Crates\Manager\LangManager;
+use Nozell\Crates\Events\GiveAllKeysEvent;
+use Nozell\Crates\tags\Names;
 
 final class GiveAllKeyMenu extends CustomForm
 {
@@ -14,7 +14,7 @@ final class GiveAllKeyMenu extends CustomForm
 
     public function __construct(Player $player)
     {
-        $this->keyTypes = ["mage", "ice", "ender", "magma", "pegasus"];
+        $this->keyTypes = [Names::Mage, Names::Ice, Names::Ender, Names::Magma, Names::Pegasus];
 
         $form = new CustomForm(function (Player $player, $data) {
             $this->handleResponse($player, $data);
@@ -60,33 +60,8 @@ final class GiveAllKeyMenu extends CustomForm
         $keyType = $this->keyTypes[$data[0]];
         $amount = (int) $data[1];
 
-        foreach (Server::getInstance()->getOnlinePlayers() as $onlinePlayer) {
-            $meeting = MeetingManager::getInstance()
-                ->getMeeting($onlinePlayer)
-                ->getCratesData();
-
-            match ($keyType) {
-                "mage" => $meeting->addKeyMage($amount),
-                "ice" => $meeting->addKeyIce($amount),
-                "ender" => $meeting->addKeyEnder($amount),
-                "magma" => $meeting->addKeyMagma($amount),
-                "pegasus" => $meeting->addKeyPegasus($amount),
-                default => $player->sendMessage(
-                    LangManager::getInstance()->generateMsg(
-                        "unknown-key-type",
-                        [],
-                        []
-                    )
-                ),
-            };
-
-            $msg = LangManager::getInstance()->generateMsg(
-                "received-keys",
-                ["{amount}", "{keyType}"],
-                [$amount, $keyType]
-            );
-            $onlinePlayer->sendMessage($msg);
-        }
+        $event = new GiveAllKeysEvent($player, $keyType, $amount);
+        $event->call();
 
         $msg = LangManager::getInstance()->generateMsg(
             "given-keys",

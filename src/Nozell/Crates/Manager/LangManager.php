@@ -26,12 +26,12 @@ class LangManager
     private function resolvePath(): string
     {
         $langPaths = [
-            "es" => "spanish.yml",
-            "en" => "english.yml",
-            "tr" => "turkish.yml",
-            "zh" => "chinese.yml",
-            "ja" => "japanese.yml",
-            "fr" => "french.yml",
+            "es" => "spanish.json",
+            "en" => "english.json",
+            "tr" => "turkish.json",
+            "zh" => "chinese.json",
+            "ja" => "japanese.json",
+            "fr" => "french.json",
         ];
 
         $langID = Main::getInstance()
@@ -40,7 +40,7 @@ class LangManager
 
         return Main::getInstance()->getDataFolder() .
             "lang/" .
-            ($langPaths[$langID] ?? "english.yml");
+            ($langPaths[$langID] ?? "english.json");
     }
 
     private function fileExists(string $path): bool
@@ -50,13 +50,13 @@ class LangManager
 
     private function parseConfig(string $path): array
     {
-        return (new Config($path, Config::YAML))->getAll();
+        $jsonContent = file_get_contents($path);
+        return json_decode($jsonContent, true) ?? [];
     }
 
     private function createLangFile(string $path): void
     {
-        $config = new Config($path, Config::YAML);
-        $config->save();
+        file_put_contents($path, json_encode([], JSON_PRETTY_PRINT));
         Main::getInstance()
             ->getLogger()
             ->info("Created new empty translation file at: " . $path);
@@ -71,9 +71,9 @@ class LangManager
             return null;
         }
 
-        $msgFormat =
-            $this->messages[$identifier] ??
+        $msgFormat = $this->messages[$identifier] ??
             "Translation key '{$identifier}' not found.";
+
         return str_replace($tags, $subs, $msgFormat);
     }
 }

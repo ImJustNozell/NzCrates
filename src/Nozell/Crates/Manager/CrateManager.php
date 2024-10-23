@@ -2,225 +2,101 @@
 
 namespace Nozell\Crates\Manager;
 
-use pocketmine\utils\TextFormat;
-use pocketmine\player\Player;
 use pocketmine\utils\Config;
-use pocketmine\entity\Entity;
-use Nozell\Crates\Utils\CooldownTask;
+use Nozell\Crates\Data\CrateData;
+use Nozell\Crates\Rewards\Reward;
 use Nozell\Crates\Utils\ItemSerializer;
-use Nozell\Crates\Utils\LavaParticleEffect;
-use Nozell\Crates\Utils\SoundEffect;
-use pocketmine\Server;
 use Nozell\Crates\Main;
-use Nozell\Crates\Manager\LangManager;
+use Nozell\Crates\Utils\RewardSelector;
 use pocketmine\utils\SingletonTrait;
 
 class CrateManager
 {
-    use LavaParticleEffect;
-    use SoundEffect;
     use SingletonTrait;
 
-    public Config $crateData;
+    private array $crates = [];
+    private string $rewardsPath;
 
-    public function saveCrates(): void
+    public function __construct()
     {
-        Main::getInstance()
-            ->getConfig()
-            ->save();
+
+        $this->rewardsPath = Main::getInstance()->getDataFolder() . "rewards/";
+
+        if (!is_dir($this->rewardsPath)) {
+            mkdir($this->rewardsPath, 0755, true);
+        }
     }
 
-    public function addCrateItems(string $crateLabel, array $crateItems): void
+    public function loadCrateIntoCache(string $crateLabel): void
     {
-        $serializedItems = [];
+        $filePath = $this->rewardsPath . $crateLabel . ".json";
+        if (file_exists($filePath)) {
+            $config = new Config($filePath, Config::JSON);
+            $rewardsData = $config->getAll();
 
-        foreach ($crateItems as $crateItem) {
-            $serializedItems[] = ItemSerializer::serialize($crateItem);
+            $rewards = array_map(function ($rewardData) {
+                return new Reward(
+                    ItemSerializer::deserialize($rewardData['item']),
+                    $rewardData['chance'],
+                    $rewardData['slot']
+                );
+            }, $rewardsData);
+
+            $this->crates[$crateLabel] = new CrateData($crateLabel, $rewards);
         }
-
-        Main::getInstance()
-            ->getConfig()
-            ->set($crateLabel, serialize($serializedItems));
-        $this->saveCrates();
     }
 
-    public function crateExists(string $crateLabel): bool
+    public function loadAllCratesIntoCache(): void
     {
-        return Main::getInstance()
-            ->getConfig()
-            ->exists($crateLabel);
+        foreach (glob($this->rewardsPath . "*.json") as $file) {
+            $crateLabel = basename($file, ".json");
+            $this->loadCrateIntoCache($crateLabel);
+        }
     }
 
-    public function getRandomItemFromCrate(
-        string $crateLabel,
-        string $name,
-        Entity $entity
-    ): void {
-        $targetPlayer = Server::getInstance()->getPlayerExact($name);
+    public function saveCrateFromCache(string $crateLabel): void
+    {
+        if (isset($this->crates[$crateLabel])) {
+            $crateData = $this->crates[$crateLabel];
+            $rewards = $crateData->getRewards();
+            $rewardsArray = array_map(function (Reward $reward) {
+                return [
+                    'item' => ItemSerializer::serialize($reward->getItem()),
+                    'chance' => $reward->getChance(),
+                    'slot' => $reward->getSlot()
+                ];
+            }, $rewards);
 
-        if (!$targetPlayer instanceof Player) {
-            var_dump("Player Not Found");
-            return;
+            $config = new Config($this->rewardsPath . $crateLabel . ".json", Config::JSON);
+            $config->setAll($rewardsArray);
+            $config->save();
         }
-
-        if (
-            !Main::getInstance()
-                ->getConfig()
-                ->exists($crateLabel)
-        ) {
-            var_dump("Crate not found");
-            return;
-        }
-
-        $deserializedData = unserialize(
-            Main::getInstance()
-                ->getConfig()
-                ->get($crateLabel)
-        );
-        $randomIndex = array_rand($deserializedData);
-        $randomItem = ItemSerializer::deserialize(
-            $deserializedData[$randomIndex]
-        );
-        $playerInventory = $targetPlayer->getInventory();
-        $itemLabel = $randomItem->getName();
-
-        if (!$playerInventory->canAddItem($randomItem)) {
-            return;
-        }
-
-        $actionsQueue = [
-            [
-                "actions" => [
-                    function (Player $targetPlayer) use (
-                        $randomItem,
-                        $itemLabel,
-                        $playerInventory,
-                        $crateLabel,
-                        $entity
-                    ) {
-                        $msg = LangManager::getInstance()->generateMsg(
-                            "won-item",
-                            ["{itemName}"],
-                            [$itemLabel]
-                        );
-                        $targetPlayer->sendMessage(TextFormat::colorize($msg));
-                        $playerInventory->addItem($randomItem);
-                        self::playSound(
-                            $targetPlayer,
-                            "firework.twinkle",
-                            100,
-                            500
-                        );
-
-                        self::addLavaParticles(
-                            $entity->getWorld(),
-                            $entity->getPosition()
-                        );
-
-                        $onlinePlayers = Server::getInstance()->getOnlinePlayers();
-                        foreach ($onlinePlayers as $onlinePlayer) {
-                            $wonAlertMsg = LangManager::getInstance()->generateMsg(
-                                "won-alert",
-                                ["{userName}", "{itemName}", "{crateName}"],
-                                [
-                                    $targetPlayer->getName(),
-                                    $itemLabel,
-                                    $crateLabel,
-                                ]
-                            );
-                            $onlinePlayer->sendTip(
-                                TextFormat::colorize($wonAlertMsg)
-                            );
-                        }
-                    },
-                ],
-            ],
-            [
-                "actions" => [
-                    function (Player $targetPlayer) use (
-                        $randomItem,
-                        $itemLabel,
-                        $entity
-                    ) {
-                        $targetPlayer->sendTitle(
-                            TextFormat::colorize("&e1"),
-                            "",
-                            5,
-                            20,
-                            5
-                        );
-                        self::playSound($targetPlayer, "note.harp", 100, 500);
-                    },
-                ],
-            ],
-            [
-                "actions" => [
-                    function (Player $targetPlayer) use (
-                        $randomItem,
-                        $itemLabel,
-                        $entity
-                    ) {
-                        $targetPlayer->sendTitle(
-                            TextFormat::colorize("&g2"),
-                            "",
-                            5,
-                            20,
-                            5
-                        );
-                        self::playSound($targetPlayer, "note.harp", 100, 500);
-                    },
-                ],
-            ],
-            [
-                "actions" => [
-                    function (Player $targetPlayer) use (
-                        $randomItem,
-                        $itemLabel,
-                        $entity
-                    ) {
-                        $targetPlayer->sendTitle(
-                            TextFormat::colorize("&63"),
-                            "",
-                            5,
-                            20,
-                            5
-                        );
-                        self::playSound($targetPlayer, "note.harp", 100, 500);
-                    },
-                ],
-            ],
-        ];
-
-        $pluginScheduler = Main::getInstance()->getScheduler();
-        $pluginScheduler->scheduleRepeatingTask(
-            new CooldownTask($targetPlayer, $actionsQueue),
-            20
-        );
     }
 
-    public function getCrateItems(string $crateLabel): array
+    public function saveAllCratesFromCache(): void
     {
-        if (
-            !Main::getInstance()
-                ->getConfig()
-                ->exists($crateLabel)
-        ) {
-            var_dump("Crate not found");
-            return [];
+        foreach ($this->crates as $crateLabel => $crateData) {
+            $this->saveCrateFromCache($crateLabel);
+        }
+    }
+
+    public function getCrate(string $crateLabel): ?CrateData
+    {
+        return $this->crates[$crateLabel] ?? null;
+    }
+
+    public function crateExistsInCache(string $crateLabel): bool
+    {
+        return isset($this->crates[$crateLabel]);
+    }
+
+    public function getRandomItemFromCrate(string $crateLabel): ?Reward
+    {
+        $crateData = $this->getCrate($crateLabel);
+        if ($crateData === null) {
+            return null;
         }
 
-        $deserializedData = unserialize(
-            Main::getInstance()
-                ->getConfig()
-                ->get($crateLabel)
-        );
-        $itemsList = [];
-
-        foreach ($deserializedData as $itemData) {
-            $item = ItemSerializer::deserialize($itemData);
-            $itemsList[] = $item;
-        }
-
-        return $itemsList;
+        return RewardSelector::getInstance()->selectReward($crateData->getRewards());
     }
 }

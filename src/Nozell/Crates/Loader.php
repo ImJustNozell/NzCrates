@@ -56,12 +56,13 @@ final class Loader
     public static function LoadLangs(): void
     {
         $main = Main::getInstance();
-        $main->saveResource("lang\chinese.yml");
-        $main->saveResource('lang\english.yml');
-        $main->saveResource('lang\french.yml');
-        $main->saveResource("lang\japanese.yml");
-        $main->saveResource("lang\spanish.yml");
-        $main->saveResource('lang\turkish.yml');
+        $main->saveResource("lang/chinese.json");
+        $main->saveResource("lang/english.json");
+        $main->saveResource("lang/french.json");
+        $main->saveResource("lang/japanese.json");
+        $main->saveResource("lang/spanish.json");
+        $main->saveResource("lang/turkish.json");
+
         LangManager::getInstance()->loadLangs();
     }
 

@@ -3,96 +3,49 @@
 namespace Nozell\Crates\Menu;
 
 use pocketmine\player\Player;
-use Nozell\Crates\Main;
-use Vecnavium\FormsUI\CustomForm;
 use muqsit\invmenu\InvMenu;
-use Nozell\Crates\Manager\CrateManager;
 use pocketmine\inventory\Inventory;
+use Nozell\Crates\Rewards\Reward;
+use Nozell\Crates\Rewards\RewardManager;
 use Nozell\Crates\Manager\LangManager;
 
-class SetItemsMenu extends CustomForm
+class SetItemsMenu
 {
-    private array $crateTypes;
+    private RewardManager $rewardManager;
+    private string $crateType;
 
-    public function __construct(Player $player)
+    public function __construct(Player $player, string $crateType)
     {
-        parent::__construct(function (Player $player, $data) {
-            $this->handleResponse($player, $data);
-        });
+        $this->crateType = $crateType;
+        $this->rewardManager = new RewardManager();
 
-        $this->crateTypes = ["mage", "ice", "ender", "magma", "pegasus"];
-
-        $this->setTitle(
-            LangManager::getInstance()->generateMsg(
-                "form-title-set-items",
-                [],
-                []
-            )
-        );
-        $this->addDropdown(
-            LangManager::getInstance()->generateMsg(
-                "form-dropdown-crate-type",
-                [],
-                []
-            ),
-            $this->crateTypes
-        );
-
-        $player->sendForm($this);
+        $this->openMenu($player);
     }
 
-    public function handleResponse(Player $player, $data): void
-    {
-        if ($data === null || !isset($this->crateTypes[$data[0]])) {
-            $player->sendMessage(
-                LangManager::getInstance()->generateMsg("invalid-data", [], [])
-            );
-            return;
-        }
-
-        $crateType = $this->crateTypes[$data[0]];
-
-        $this->openCrateMenu($player, $crateType);
-    }
-
-    public function openCrateMenu(Player $player, string $crateType): void
+    public function openMenu(Player $player): void
     {
         $menu = InvMenu::create(InvMenu::TYPE_DOUBLE_CHEST);
-        $menu->setName(
-            LangManager::getInstance()->generateMsg(
-                "crate-title",
-                ["{crateType}"],
-                [ucfirst($crateType)]
-            )
-        );
+        $menu->setName(LangManager::getInstance()->generateMsg("set-items-menu", ["{crateType}"], [ucfirst($this->crateType)]));
 
-        $crateManager = CrateManager::getInstance();
-        $items = $crateManager->getCrateItems($crateType);
-
+        $rewards = $this->rewardManager->getRewardsForCrate($this->crateType);
         $inventory = $menu->getInventory();
-        foreach ($items as $item) {
-            $inventory->addItem($item);
+
+        foreach ($rewards as $reward) {
+            $inventory->setItem($reward->getSlot(), $reward->getItem());
         }
 
-        $menu->setInventoryCloseListener(function (
-            Player $player,
-            Inventory $inventory
-        ) use ($crateType): void {
-            $crateManager = CrateManager::getInstance();
+        $menu->setInventoryCloseListener(function (Player $closingPlayer, Inventory $inventory) use ($player): void {
             $crateItems = [];
 
-            foreach ($inventory->getContents() as $item) {
-                $crateItems[] = $item;
+            foreach ($inventory->getContents() as $slot => $item) {
+                $existingReward = $this->rewardManager->getRewardForSlot($this->crateType, $slot);
+                $chance = $existingReward ? $existingReward->getChance() : 0.1;
+
+                $crateItems[] = new Reward($item, $chance, $slot);
             }
 
-            $crateManager->addCrateItems($crateType, $crateItems);
-            $player->sendMessage(
-                LangManager::getInstance()->generateMsg(
-                    "items-saved",
-                    ["{crateType}"],
-                    [$crateType]
-                )
-            );
+            $this->rewardManager->addRewardToCrate($this->crateType, $crateItems[]);
+            $player->sendMessage(LangManager::getInstance()->generateMsg("items-saved", ["{crateType}"], [$this->crateType]));
         });
 
         $menu->send($player);

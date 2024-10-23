@@ -7,19 +7,19 @@ namespace Nozell\Crates\Meetings;
 use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
 use Nozell\Crates\Utils\CratesUtils;
-use Nozell\Crates\Data\CratesData;
+use Nozell\Crates\Data\PlayerData;
 use Nozell\Crates\Manager\LangManager;
 
 final class Meeting
 {
-    private CratesData $CratesData;
+    private PlayerData $CratesData;
 
     public function __construct(private readonly Player $player)
     {
-        $this->CratesData = new CratesData($this);
+        $this->CratesData = new PlayerData($this);
     }
 
-    public function getCratesData(): CratesData
+    public function getCratesData(): PlayerData
     {
         return $this->CratesData;
     }

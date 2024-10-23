@@ -1,5 +1,5 @@
 name: NzCrates
-version: 1.0.2
+version: 1.0.3 - Dev
 author: Nozell
 api: [5.0.0]
 main: Nozell\Crates\Main

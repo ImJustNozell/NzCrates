@@ -3,14 +3,11 @@
 namespace Nozell\Crates\Menu;
 
 use pocketmine\player\Player;
-use Nozell\Crates\Entity\MageBoxEntity;
-use Nozell\Crates\Entity\EnderBoxEntity;
-use Nozell\Crates\Entity\PegasusBoxEntity;
-use Nozell\Crates\Entity\IceBoxEntity;
-use Nozell\Crates\Entity\MagmaBoxEntity;
+use pocketmine\Server;
 use Vecnavium\FormsUI\CustomForm;
-use pocketmine\nbt\tag\CompoundTag;
+use Nozell\Crates\Events\SpawnCrateEvent;
 use Nozell\Crates\Manager\LangManager;
+use Nozell\Crates\tags\Names;
 
 class SpawnBoxMenu extends CustomForm
 {
@@ -22,7 +19,7 @@ class SpawnBoxMenu extends CustomForm
             $this->handleResponse($player, $data);
         });
 
-        $this->crateTypes = ["mage", "ice", "ender", "magma", "pegasus"];
+        $this->crateTypes = [Names::Mage, Names::Ice, Names::Ender, Names::Magma, Names::Pegasus];
 
         $this->setTitle(
             LangManager::getInstance()->generateMsg(
@@ -54,30 +51,7 @@ class SpawnBoxMenu extends CustomForm
 
         $crateType = $this->crateTypes[$data[0]];
 
-        switch ($crateType) {
-            case "mage":
-                new MageBoxEntity($player->getLocation(), new CompoundTag());
-                break;
-            case "ice":
-                new IceBoxEntity($player->getLocation(), new CompoundTag());
-                break;
-            case "ender":
-                new EnderBoxEntity($player->getLocation(), new CompoundTag());
-                break;
-            case "magma":
-                new MagmaBoxEntity($player->getLocation(), new CompoundTag());
-                break;
-            case "pegasus":
-                new PegasusBoxEntity($player->getLocation(), new CompoundTag());
-                break;
-        }
-
-        $player->sendMessage(
-            LangManager::getInstance()->generateMsg(
-                "crate-spawned",
-                ["{crateType}"],
-                [$crateType]
-            )
-        );
+        $event = new SpawnCrateEvent($player, $crateType);
+        $event->call();
     }
 }

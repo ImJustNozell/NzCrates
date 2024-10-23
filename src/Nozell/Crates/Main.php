@@ -2,6 +2,7 @@
 
 namespace Nozell\Crates;
 
+use Nozell\Crates\Manager\CrateManager;
 use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
@@ -14,14 +15,35 @@ class Main extends PluginBase implements Listener
         reset as private;
     }
 
+
     public function onEnable(): void
     {
+        $startTime = microtime(true);
+
         self::setInstance($this);
 
-        Loader::LoadAll();
+        CrateManager::getInstance()->loadAllCratesIntoCache();
 
         Server::getInstance()
             ->getLogger()
             ->debug("NzCrates enabling");
+
+        Loader::LoadAll();
+
+        $endTime = microtime(true);
+        $executionTime = ($endTime - $startTime) * 1_000_000;
+
+        Server::getInstance()
+            ->getLogger()
+            ->info("NzCrates enabled in " . round($executionTime, 2) . " ms.");
+    }
+
+    public function onDisable(): void
+    {
+        CrateManager::getInstance()->saveAllCratesFromCache();
+
+        Server::getInstance()
+            ->getLogger()
+            ->debug("NzCrates disabling");
     }
 }

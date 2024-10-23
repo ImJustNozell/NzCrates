@@ -6,7 +6,7 @@ namespace Nozell\Crates\Data;
 
 use Nozell\Crates\Meetings\Meeting;
 
-final class CratesData
+final class PlayerData
 {
     public function __construct(
         private readonly Meeting $meeting,

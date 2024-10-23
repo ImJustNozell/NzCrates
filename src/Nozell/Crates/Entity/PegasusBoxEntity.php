@@ -2,20 +2,20 @@
 
 namespace Nozell\Crates\Entity;
 
+use Nozell\Crates\Events\OpenCrateEvent;
 use pocketmine\entity\EntitySizeInfo;
 use pocketmine\entity\Location;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
-use pocketmine\item\VanillaItems;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\player\Player;
-use Nozell\Crates\Manager\CrateManager;
-use Nozell\Crates\Meetings\MeetingManager;
 use pocketmine\entity\Living;
 use Nozell\Crates\Manager\ParticleManager;
 use Nozell\Crates\Manager\LangManager;
 use Nozell\Crates\tags\EntityIds;
+use Nozell\Crates\tags\Names;
 use Nozell\Crates\tags\Perms;
+use pocketmine\item\Sword;
 
 class PegasusBoxEntity extends Living
 {
@@ -47,7 +47,7 @@ class PegasusBoxEntity extends Living
 
     public function getName(): string
     {
-        return "PegasusBoxEntity";
+        return Names::Pegasus;
     }
 
     public function onUpdate(int $currentTick): bool
@@ -70,58 +70,22 @@ class PegasusBoxEntity extends Living
     public function attack(EntityDamageEvent $source): void
     {
         $source->cancel();
-        if (!$source instanceof EntityDamageByEntityEvent) {
-            return;
-        }
+        if (!$source instanceof EntityDamageByEntityEvent) return;
 
         $damager = $source->getDamager();
 
-        if (!$damager instanceof Player) {
-            return;
-        }
+        if (!$damager instanceof Player) return;
 
-        if (
-            $damager
-            ->getInventory()
-            ->getItemInHand()
-            ->getTypeId() === VanillaItems::DIAMOND_SWORD()->getTypeId()
-        ) {
-            if (!$damager->hasPermission(Perms::Admin)) {
-                return;
-            }
+        if ($damager->getInventory()->getItemInHand() instanceof Sword) {
+            if (!$damager->hasPermission(Perms::Admin)) return;
             $this->flagForDespawn();
-
             return;
         } else {
-            $meeting = MeetingManager::getInstance()
-                ->getMeeting($damager)
-                ->getCratesData();
 
-            if ($meeting->getKeyPegasus() > 0) {
-                $meeting->reduceKeyPegasus();
-                CrateManager::getInstance()->getRandomItemFromCrate(
-                    "pegasus",
-                    $damager->getName(),
-                    $this
-                );
-            } else {
-                $msg = LangManager::getInstance()->generateMsg(
-                    "no-keys",
-                    [],
-                    []
-                );
-                $damager->sendMessage($msg);
-            }
+            $ev = new OpenCrateEvent($damager, $this, $this->getName());
+            $ev->call();
+
+            if ($ev->isCancelled()) return;
         }
-    }
-
-    protected function getInitialDragMultiplier(): float
-    {
-        return 0.0;
-    }
-
-    protected function getInitialGravity(): float
-    {
-        return 0.0;
     }
 }

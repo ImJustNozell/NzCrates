@@ -1,14 +1,15 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Nozell\Crates\Manager;
 
+use pocketmine\color\Color;
 use pocketmine\world\World;
 use pocketmine\math\Vector3;
-use pocketmine\world\particle\DustParticle;
+use pocketmine\world\particle\FlameParticle;
+use pocketmine\world\particle\PortalParticle;
+use pocketmine\world\particle\EnchantParticle;
+use pocketmine\world\particle\LavaParticle;
 use pocketmine\world\particle\EndermanTeleportParticle;
-use pocketmine\color\Color;
 
 final class ParticleManager
 {
@@ -23,69 +24,35 @@ final class ParticleManager
     ): void {
         switch ($type) {
             case "fire":
-                $this->setHorario(
-                    $w,
-                    $p,
-                    new DustParticle(new Color(255, 165, 0))
-                );
-                $this->setAntiHorario(
-                    $w,
-                    $p,
-                    new DustParticle(new Color(255, 255, 0))
-                );
+                $this->setHorario($w, $p, new FlameParticle());
+                $this->setAntiHorario($w, $p, new FlameParticle());
                 break;
             case "enchantment":
-                $this->setHorario(
-                    $w,
-                    $p,
-                    new DustParticle(new Color(128, 0, 128))
-                );
-                $this->setAntiHorario(
-                    $w,
-                    $p,
-                    new DustParticle(new Color(128, 128, 128))
-                );
+                $this->setHorario($w, $p, new EnchantParticle(new Color(128, 128, 128)));
+                $this->setAntiHorario($w, $p, new PortalParticle());
                 break;
             case "villager":
-                $this->setHorario(
-                    $w,
-                    $p,
-                    new DustParticle(new Color(255, 255, 0))
-                );
-                $this->setAntiHorario(
-                    $w,
-                    $p,
-                    new DustParticle(new Color(255, 255, 255))
-                );
+                $this->setHorario($w, $p, new PortalParticle());
+                $this->setAntiHorario($w, $p, new PortalParticle());
                 break;
             case "enderman_teleport":
-                $this->sendEndermanTeleportParticles($w, $p, $tick);
+                $this->EndermanParticles($w, $p, $tick);
                 break;
-            case "ice":
-                $this->setHorario(
-                    $w,
-                    $p,
-                    new DustParticle(new Color(255, 255, 255))
-                );
-                $this->setAntiHorario(
-                    $w,
-                    $p,
-                    new DustParticle(new Color(173, 216, 230))
-                ); // Celeste
+            case "lava":
+                $this->setHorario($w, $p, new LavaParticle());
+                $this->setAntiHorario($w, $p, new LavaParticle());
                 break;
             default:
                 break;
         }
     }
 
-    public function setHorario(
-        World $w,
-        Vector3 $p,
-        DustParticle $particle
-    ): void {
+    public function setHorario(World $w, Vector3 $p, $particle): void
+    {
         $size = 0.6;
+        $heightIncrement = min($this->particleCounter * 0.02, 2);
         $x = $p->getX() + cos(deg2rad($this->particleCounter / 0.1)) * $size;
-        $y = $p->getY() + 1.5;
+        $y = $p->getY() + 1.5 + $heightIncrement;
         $z = $p->getZ() + sin(deg2rad($this->particleCounter / 0.1)) * $size;
 
         $pos = new Vector3($x, $y, $z);
@@ -94,14 +61,12 @@ final class ParticleManager
         $this->incrementParticleCounter();
     }
 
-    public function setAntiHorario(
-        World $w,
-        Vector3 $p,
-        DustParticle $particle
-    ): void {
+    public function setAntiHorario(World $w, Vector3 $p, $particle): void
+    {
         $size = 0.6;
+        $heightIncrement = min($this->particleCounter * 0.02, 2);
         $x = $p->getX() - cos(deg2rad($this->particleCounter / 0.1)) * $size;
-        $y = $p->getY() + 1.5;
+        $y = $p->getY() + 1.5 + $heightIncrement;
         $z = $p->getZ() - sin(deg2rad($this->particleCounter / 0.1)) * $size;
 
         $pos = new Vector3($x, $y, $z);
@@ -110,11 +75,8 @@ final class ParticleManager
         $this->incrementParticleCounter();
     }
 
-    private function sendEndermanTeleportParticles(
-        World $w,
-        Vector3 $p,
-        int $tick
-    ): void {
+    private function EndermanParticles(World $w, Vector3 $p, int $tick): void
+    {
         if ($tick > $this->lastParticleTime + 25) {
             $pos = $p->add(0, 1, 0);
             $w->addParticle($pos, new EndermanTeleportParticle());
