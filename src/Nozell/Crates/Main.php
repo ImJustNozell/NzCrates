@@ -18,25 +18,31 @@ class Main extends PluginBase implements Listener
 
     public function onEnable(): void
     {
-        $startTime = microtime(true);
-
         self::setInstance($this);
+        $startTime = microtime(true);
 
         CrateManager::getInstance()->loadAllCratesIntoCache();
 
-        Server::getInstance()
-            ->getLogger()
-            ->debug("NzCrates enabling");
+        Server::getInstance()->getLogger()->debug("NzCrates enabling");
 
         Loader::LoadAll();
 
         $endTime = microtime(true);
-        $executionTime = ($endTime - $startTime) * 1_000_000;
+        $executionTime = ($endTime - $startTime);
 
-        Server::getInstance()
-            ->getLogger()
-            ->info("NzCrates enabled in " . round($executionTime, 2) . " ms.");
+        if ($executionTime < 1) {
+            $executionTimeMilliseconds = $executionTime * 1_000;
+            Server::getInstance()
+                ->getLogger()
+                ->info("NzCrates enabled in " . round($executionTimeMilliseconds, 2) . " ms.");
+        } else {
+            Server::getInstance()
+                ->getLogger()
+                ->info("NzCrates enabled in " . round($executionTime, 2) . " s.");
+        }
     }
+
+
 
     public function onDisable(): void
     {
