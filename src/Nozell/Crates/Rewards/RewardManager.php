@@ -38,4 +38,9 @@ class RewardManager
     {
         $this->cratesRewards[$crateType] = [];
     }
+
+    public function getCratesRewards(): array
+    {
+        return $this->cratesRewards;
+    }
 }
