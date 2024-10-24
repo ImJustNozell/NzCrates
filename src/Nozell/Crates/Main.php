@@ -5,8 +5,10 @@ namespace Nozell\Crates;
 use Nozell\Crates\Manager\CrateManager;
 use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
+use pocketmine\resourcepacks\ZippedResourcePack;
 use pocketmine\Server;
 use pocketmine\utils\SingletonTrait;
+use Symfony\Component\Filesystem\Path;
 
 class Main extends PluginBase implements Listener
 {
@@ -20,6 +22,24 @@ class Main extends PluginBase implements Listener
     {
         self::setInstance($this);
         $startTime = microtime(true);
+        $this->saveResource("Crates.mcpack");
+        $rpManager = Server::getInstance()->getResourcePackManager();
+
+        $rpManager->setResourceStack(
+            array_merge($rpManager->getResourceStack(), [
+                new ZippedResourcePack(
+                    Path::join(
+                        $this->getDataFolder(),
+                        "Crates.mcpack"
+                    )
+                ),
+            ])
+        );
+
+        (new \ReflectionProperty($rpManager, "serverForceResources"))->setValue(
+            $rpManager,
+            true
+        );
 
         CrateManager::getInstance()->loadAllCratesIntoCache();
 

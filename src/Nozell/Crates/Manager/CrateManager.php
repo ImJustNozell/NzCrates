@@ -19,7 +19,6 @@ class CrateManager
 
     public function __construct()
     {
-
         $this->rewardsPath = Main::getInstance()->getDataFolder() . "rewards/";
 
         if (!is_dir($this->rewardsPath)) {
@@ -59,6 +58,7 @@ class CrateManager
         if (isset($this->crates[$crateLabel])) {
             $crateData = $this->crates[$crateLabel];
             $rewards = $crateData->getRewards();
+
             $rewardsArray = array_map(function (Reward $reward) {
                 return [
                     'item' => ItemSerializer::serialize($reward->getItem()),

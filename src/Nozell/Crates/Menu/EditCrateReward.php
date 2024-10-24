@@ -13,7 +13,7 @@ class EditCrateReward extends SimpleForm
     public function __construct(Player $player, string $crateType)
     {
         $this->crateType = $crateType;
-        parent::__construct([$this]);
+        parent::__construct(null);
 
         $this->setTitle(LangManager::getInstance()->generateMsg("edit-crate-rewards", [], []));
         $this->addButton(LangManager::getInstance()->generateMsg("edit-crate-items", [], []));

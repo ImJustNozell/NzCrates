@@ -11,7 +11,7 @@ class SelectCrateType extends SimpleForm
 {
     public function __construct(Player $player)
     {
-        parent::__construct([$this]);
+        parent::__construct(null);
 
         $this->setTitle(LangManager::getInstance()->generateMsg("select-crate-type", [], []));
         $this->addButton(LangManager::getInstance()->generateMsg("mage-crate", [], []));

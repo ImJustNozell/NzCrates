@@ -15,9 +15,7 @@ class SpawnBoxMenu extends CustomForm
 
     public function __construct(Player $player)
     {
-        parent::__construct(function (Player $player, $data) {
-            $this->handleResponse($player, $data);
-        });
+        parent::__construct(null);
 
         $this->crateTypes = [Names::Mage, Names::Ice, Names::Ender, Names::Magma, Names::Pegasus];
 

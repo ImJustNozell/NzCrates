@@ -28,13 +28,19 @@ class EditChanceForm extends CustomForm
 
     public function handleResponse(Player $player, $data): void
     {
-        if ($data === null || !is_numeric($data[0])) {
+        if ($data === null || !isset($data[1])) {
             $player->sendMessage(LangManager::getInstance()->generateMsg("invalid-data", [], []));
             return;
         }
 
-        $newChance = (float)$data[0];
-        $this->reward->setChance($newChance);
+        $newChance = trim($data[1]);
+        if (!is_numeric($newChance)) {
+            $player->sendMessage(LangManager::getInstance()->generateMsg("invalid-data", [], []));
+            return;
+        }
+
+        $this->reward->setChance((float)$newChance);
+
         $player->sendMessage(LangManager::getInstance()->generateMsg("chance-updated", [], []));
     }
 }

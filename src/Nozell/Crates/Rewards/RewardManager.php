@@ -2,8 +2,11 @@
 
 namespace Nozell\Crates\Rewards;
 
+use pocketmine\utils\SingletonTrait;
+
 class RewardManager
 {
+    use SingletonTrait;
     private array $cratesRewards = [];
 
     public function addRewardToCrate(string $crateType, Reward $reward): void
@@ -31,28 +34,8 @@ class RewardManager
         return $this->cratesRewards[$crateType][$slot] ?? null;
     }
 
-    public function saveAllRewards(): array
+    public function clearRewardsForCrate(string $crateType): void
     {
-        $data = [];
-        foreach ($this->cratesRewards as $crateType => $rewards) {
-            foreach ($rewards as $slot => $reward) {
-                $data[$crateType][$slot] = [
-                    'item' => $reward->getItem(),
-                    'chance' => $reward->getChance(),
-                ];
-            }
-        }
-        return $data;
-    }
-
-    public function loadAllRewards(array $data): void
-    {
-        foreach ($data as $crateType => $rewards) {
-            foreach ($rewards as $slot => $rewardData) {
-                $item = $rewardData['item'];
-                $chance = $rewardData['chance'];
-                $this->addRewardToCrate($crateType, new Reward($item, $chance, $slot));
-            }
-        }
+        $this->cratesRewards[$crateType] = [];
     }
 }

@@ -41,7 +41,7 @@ class CrateListeners implements Listener
             ->getMeeting($player)
             ->getCratesData();
 
-        if ($meeting->getKeyEnder() <= 0) {
+        if ($this->getkey($player, $crate) <= 0) {
             $msg = LangManager::getInstance()->generateMsg("no-keys", [], []);
             $ev->cancel();
             $player->sendMessage($msg);
@@ -49,7 +49,20 @@ class CrateListeners implements Listener
         }
 
         $reward = CrateManager::getInstance()->getRandomItemFromCrate($crate);
+
+        if ($reward === null) {
+            $player->sendMessage("Esta crate no tiene premios.");
+            $ev->cancel();
+            return;
+        }
+
         $item = $reward->getItem();
+
+        if ($item === null) {
+            $player->sendMessage("No se pudo obtener un ítem de esta crate.");
+            $ev->cancel();
+            return;
+        }
         $playerInventory = $player->getInventory();
 
         if (!$playerInventory->canAddItem($item)) {
@@ -203,6 +216,22 @@ class CrateListeners implements Listener
             Names::Ender => $meeting->reduceKeyEnder(),
             Names::Magma => $meeting->reduceKeyMagma(),
             Names::Pegasus => $meeting->reduceKeyPegasus(),
+        };
+    }
+
+    public function getkey(Player $player, string $key): int
+    {
+        $meeting = MeetingManager::getInstance()
+            ->getMeeting($player)
+            ->getCratesData();
+
+        return match ($key) {
+            Names::Mage => $meeting->getKeyMage(),
+            Names::Ice => $meeting->getKeyIce(),
+            Names::Ender => $meeting->getKeyEnder(),
+            Names::Magma => $meeting->getKeyMagma(),
+            Names::Pegasus => $meeting->getKeyPegasus(),
+            default => 0,
         };
     }
 }

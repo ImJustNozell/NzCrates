@@ -4,11 +4,12 @@ namespace Nozell\Crates\Menu;
 
 use pocketmine\player\Player;
 use muqsit\invmenu\InvMenu;
-use pocketmine\item\Item;
+use muqsit\invmenu\transaction\SimpleInvMenuTransaction;
+use muqsit\invmenu\transaction\InvMenuTransactionResult;
 use Nozell\Crates\Rewards\RewardManager;
 use Nozell\Crates\Manager\LangManager;
 
-class EditCrateChancesMenu
+class EditCrateChances
 {
     private string $crateType;
     private RewardManager $rewardManager;
@@ -16,7 +17,7 @@ class EditCrateChancesMenu
     public function __construct(Player $player, string $crateType)
     {
         $this->crateType = $crateType;
-        $this->rewardManager = new RewardManager();
+        $this->rewardManager = RewardManager::getInstance();
         $this->openMenu($player);
     }
 
@@ -28,6 +29,7 @@ class EditCrateChancesMenu
         $rewards = $this->rewardManager->getRewardsForCrate($this->crateType);
 
         $inventory = $menu->getInventory();
+
         foreach ($rewards as $reward) {
             $item = $reward->getItem();
             $chance = $reward->getChance();
@@ -38,12 +40,18 @@ class EditCrateChancesMenu
             $inventory->setItem($reward->getSlot(), $item);
         }
 
-        $menu->setListener(function (Player $player, Item $itemClicked, int $slot): bool {
+        $menu->setListener(function (SimpleInvMenuTransaction $transaction) use ($player, $menu): InvMenuTransactionResult {
+            $clickedItem = $transaction->getItemClicked();
+            $slot = $transaction->getAction()->getSlot();
+
             $reward = $this->rewardManager->getRewardForSlot($this->crateType, $slot);
             if ($reward !== null) {
+                $player->removeCurrentWindow();
+
                 new EditChanceForm($player, $reward);
             }
-            return true;
+
+            return $transaction->discard();
         });
 
         $menu->send($player);

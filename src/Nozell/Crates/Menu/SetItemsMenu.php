@@ -17,7 +17,7 @@ class SetItemsMenu
     public function __construct(Player $player, string $crateType)
     {
         $this->crateType = $crateType;
-        $this->rewardManager = new RewardManager();
+        $this->rewardManager = RewardManager::getInstance();
 
         $this->openMenu($player);
     }
@@ -44,7 +44,11 @@ class SetItemsMenu
                 $crateItems[] = new Reward($item, $chance, $slot);
             }
 
-            $this->rewardManager->addRewardToCrate($this->crateType, $crateItems[]);
+            $this->rewardManager->clearRewardsForCrate($this->crateType);
+            foreach ($crateItems as $reward) {
+                $this->rewardManager->addRewardToCrate($this->crateType, $reward);
+            }
+
             $player->sendMessage(LangManager::getInstance()->generateMsg("items-saved", ["{crateType}"], [$this->crateType]));
         });
 

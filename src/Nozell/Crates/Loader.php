@@ -10,6 +10,7 @@ use Nozell\Crates\Entity\IceBoxEntity;
 use Nozell\Crates\Entity\MageBoxEntity;
 use Nozell\Crates\Entity\MagmaBoxEntity;
 use Nozell\Crates\Entity\PegasusBoxEntity;
+use Nozell\Crates\Listeners\CrateListeners;
 use Nozell\Crates\Listeners\EventListener;
 use Nozell\Crates\Manager\LangManager;
 use Nozell\Crates\tags\EntityIds;
@@ -27,13 +28,11 @@ final class Loader
         self::LoadLangs();
         self::RegisterEntities();
 
-        Main::getInstance()
-            ->getServer()
-            ->getPluginManager()
-            ->registerEvents(
-                new EventListener(),
-                Main::getInstance()
-            );
+        Main::getInstance()->getServer()->getPluginManager()
+            ->registerEvents(new EventListener(), Main::getInstance());
+
+        Main::getInstance()->getServer()->getPluginManager()
+            ->registerEvents(new CrateListeners(), Main::getInstance());
 
         Server::getInstance()
             ->getCommandMap()
@@ -105,23 +104,6 @@ final class Loader
 
     public static function LoadResourcepack()
     {
-        Main::getInstance()->saveResource("Crates.mcpack");
-        $rpManager = Server::getInstance()->getResourcePackManager();
-
-        $rpManager->setResourceStack(
-            array_merge($rpManager->getResourceStack(), [
-                new ZippedResourcePack(
-                    Path::join(
-                        Main::getInstance()->getDataFolder(),
-                        "Crates.mcpack"
-                    )
-                ),
-            ])
-        );
-
-        (new \ReflectionProperty($rpManager, "serverForceResources"))->setValue(
-            $rpManager,
-            true
-        );
+        
     }
 }

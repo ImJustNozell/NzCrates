@@ -11,7 +11,7 @@ class MainMenu extends SimpleForm
 {
     public function __construct(Player $player)
     {
-        parent::__construct([$this, "handleResponse"]);
+        parent::__construct(null);
 
         $this->setTitle(LangManager::getInstance()->generateMsg("form-title-main-menu", [], []));
         $this->setContent(LangManager::getInstance()->generateMsg("form-content-select-option", [], []));
