@@ -3,6 +3,7 @@
 namespace Nozell\Crates;
 
 use Nozell\Crates\Manager\CrateManager;
+use Nozell\Crates\Session\SessionFactory;
 use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
 use pocketmine\resourcepacks\ZippedResourcePack;
@@ -71,5 +72,7 @@ class Main extends PluginBase implements Listener
         Server::getInstance()
             ->getLogger()
             ->debug("NzCrates disabling");
+
+        SessionFactory::getInstance()->removeAllSessions();
     }
 }

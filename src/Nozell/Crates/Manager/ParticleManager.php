@@ -28,7 +28,7 @@ final class ParticleManager
                 $this->setAntiHorario($w, $p, new FlameParticle());
                 break;
             case "enchantment":
-                $this->setHorario($w, $p, new EnchantParticle(new Color(128, 128, 128)));
+                $this->setHorario($w, $p, new PortalParticle());
                 $this->setAntiHorario($w, $p, new PortalParticle());
                 break;
             case "villager":
@@ -50,7 +50,7 @@ final class ParticleManager
     public function setHorario(World $w, Vector3 $p, $particle): void
     {
         $size = 0.8;
-        $heightIncrement = min($this->particleCounter * 0.02, 1.5);
+        $heightIncrement = min($this->particleCounter * 0.0, 1.34);
         $x = $p->getX() + cos(deg2rad($this->particleCounter / 0.1)) * $size;
         $y = $p->getY() + 1.5 + $heightIncrement;
         $z = $p->getZ() + sin(deg2rad($this->particleCounter / 0.1)) * $size;
@@ -64,7 +64,7 @@ final class ParticleManager
     public function setAntiHorario(World $w, Vector3 $p, $particle): void
     {
         $size = 0.8;
-        $heightIncrement = min($this->particleCounter * 0.02, 2);
+        $heightIncrement = min($this->particleCounter * 0.0, 1.34);
         $x = $p->getX() - cos(deg2rad($this->particleCounter / 0.1)) * $size;
         $y = $p->getY() + 1.5 + $heightIncrement;
         $z = $p->getZ() - sin(deg2rad($this->particleCounter / 0.1)) * $size;

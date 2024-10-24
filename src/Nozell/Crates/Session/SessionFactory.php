@@ -8,8 +8,10 @@ use Nozell\Crates\Manager\LangManager;
 use Nozell\Crates\tags\Names;
 use Nozell\Crates\Utils\CratesUtils;
 use pocketmine\player\Player;
+use pocketmine\Server;
 use pocketmine\utils\SingletonTrait;
 use pocketmine\utils\TextFormat;
+use Profile;
 
 class SessionFactory
 {
@@ -17,6 +19,13 @@ class SessionFactory
 
     private static array $session = [];
 
+    private static array $crateNames = [
+        Names::Mage,
+        Names::Ice,
+        Names::Ender,
+        Names::Magma,
+        Names::Pegasus
+    ];
 
     public static function isSession(Player $player): bool
     {
@@ -26,86 +35,50 @@ class SessionFactory
     public static function addSession(Player $player): void
     {
         $name = $player->getName();
-        if (self::isSession($player))
+        if (self::isSession($player)) {
             return;
+        }
+
         self::$session[$name] = new Profile($name);
 
-        $loadingMessage = LangManager::getInstance()->generateMsg(
-            "data-loading",
-            [],
-            []
-        );
+        $loadingMessage = LangManager::getInstance()->generateMsg("data-loading", [], []);
         $player->sendMessage(TextFormat::colorize($loadingMessage));
 
-        self::getSession($player)->setKeyMage(
-            CratesUtils::getKeyBox($player, Names::Mage)
-        );
+        foreach (self::$crateNames as $crateName) {
+            $keyAmount = CratesUtils::getKeyBox($player, $crateName);
+            self::getSession($player)->setKey($crateName, $keyAmount);
+        }
 
-        self::getSession($player)->setKeyIce(
-            CratesUtils::getKeyBox($player, Names::Ice)
-        );
-
-        self::getSession($player)->setKeyEnder(
-            CratesUtils::getKeyBox($player, Names::Ender)
-        );
-
-        self::getSession($player)->setKeyMagma(
-            CratesUtils::getKeyBox($player, Names::Magma)
-        );
-
-        self::getSession($player)->setKeyPegasus(
-            CratesUtils::getKeyBox($player, Names::Pegasus)
-        );
-
-        $loadedMessage = LangManager::getInstance()->generateMsg(
-            "data-loaded",
-            [],
-            []
-        );
+        $loadedMessage = LangManager::getInstance()->generateMsg("data-loaded", [], []);
         $player->sendMessage(TextFormat::colorize($loadedMessage));
     }
 
     public static function removeSession(Player $player): void
     {
-        if (!self::isSession($player))
+        if (!self::isSession($player)) {
             return;
-        CratesUtils::setKeyBox(
-            $player,
-            Names::Ice,
-            self::getSession($player)->getKeyMage()
-        );
+        }
 
-        CratesUtils::setKeyBox(
-            $player,
-            Names::Ice,
-            self::getSession($player)->getKeyIce()
-        );
-
-        CratesUtils::setKeyBox(
-            $player,
-            Names::Ender,
-            self::getSession($player)->getKeyEnder()
-        );
-
-        CratesUtils::setKeyBox(
-            $player,
-            Names::Magma,
-            self::getSession($player)->getKeyMagma()
-        );
-
-        CratesUtils::setKeyBox(
-            $player,
-            Names::Pegasus,
-            self::getSession($player)->getKeyPegasus()
-        );
+        foreach (self::$crateNames as $crateName) {
+            $keyAmount = self::getSession($player)->getKey($crateName);
+            CratesUtils::setKeyBox($player, $crateName, $keyAmount);
+        }
 
         unset(self::$session[$player->getName()]);
     }
 
     public static function getSession(Player $player): ?Profile
     {
-        if (!self::isSession($player))
-            return null;
-        return self::$session[$player->getName()];
+        return self::isSession($player) ? self::$session[$player->getName()] : null;
+    }
+
+    public static function removeAllSessions(): void
+    {
+        foreach (self::$session as $playerName => $session) {
+            $player = Server::getInstance()->getPlayerExact($playerName);
+            if ($player !== null) {
+                self::removeSession($player);
+            }
+        }
     }
 }

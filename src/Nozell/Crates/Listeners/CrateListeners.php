@@ -44,10 +44,10 @@ class CrateListeners implements Listener
         $player = $ev->getPlayer();
         $crate = $ev->getCrateLabel();
         $entity = $ev->getEntity();
-        $meeting = SessionFactory::getInstance()
+        $session = SessionFactory::getInstance()
             ->getSession($player);
 
-        if ($this->getkey($player, $crate) <= 0) {
+        if ($session->getKey($crate) <= 0) {
             $msg = LangManager::getInstance()->generateMsg("no-keys", [], []);
             $ev->cancel();
             $player->sendMessage($msg);
@@ -79,13 +79,18 @@ class CrateListeners implements Listener
         $actionsQueue = [
             [
                 "actions" => [
-                    function (Player $player) use ($item, $playerInventory, $crate, $entity) {
+                    function (Player $player) use ($item, $playerInventory, $crate, $entity, $session) {
                         $msg = LangManager::getInstance()->generateMsg("won-item", ["{itemName}"], [$item->getName()]);
                         $player->sendMessage(TextFormat::colorize($msg));
 
+                        $item->setLore([]);
+
+                        $item->setLore(["Obtenido de " . $crate]);
+
                         $playerInventory->addItem($item);
 
-                        $this->reduceKey($player, $crate);
+
+                        $session->reduceKey($crate);
 
                         self::playSound($player, "firework.twinkle", 100, 500);
 
@@ -141,19 +146,10 @@ class CrateListeners implements Listener
         $amount = $event->getAmount();
 
         foreach (Server::getInstance()->getOnlinePlayers() as $onlinePlayer) {
-            $meeting = SessionFactory::getInstance()
+            $session = SessionFactory::getInstance()
                 ->getSession($onlinePlayer);
 
-            match ($keyType) {
-                Names::Mage => $meeting->addKeyMage($amount),
-                Names::Ice => $meeting->addKeyIce($amount),
-                Names::Ender => $meeting->addKeyEnder($amount),
-                Names::Magma => $meeting->addKeyMagma($amount),
-                Names::Pegasus => $meeting->addKeyPegasus($amount),
-                default => $player->sendMessage(
-                    LangManager::getInstance()->generateMsg("unknown-key-type", [], [])
-                ),
-            };
+            $session->addKey($keyType, $amount);
 
             $msg = LangManager::getInstance()
                 ->generateMsg("received-keys", ["{amount}", "{keyType}"], [$amount, $keyType]);
@@ -168,19 +164,10 @@ class CrateListeners implements Listener
         $keyType = $event->getKeyType();
         $amount = $event->getAmount();
 
-        $meeting = SessionFactory::getInstance()
+        $session = SessionFactory::getInstance()
             ->getSession($receiver);
 
-        match ($keyType) {
-            Names::Mage => $meeting->addKeyMage($amount),
-            Names::Ice => $meeting->addKeyIce($amount),
-            Names::Ender => $meeting->addKeyEnder($amount),
-            Names::Magma => $meeting->addKeyMagma($amount),
-            Names::Pegasus => $meeting->addKeyPegasus($amount),
-            default => $sender->sendMessage(
-                LangManager::getInstance()->generateMsg("unknown-key-type", [], [])
-            ),
-        };
+        $session->addKey($keyType, $amount);
 
         $msg = LangManager::getInstance()
             ->generateMsg("received-keys", ["{amount}", "{keyType}"], [$amount, $keyType]);
@@ -207,33 +194,5 @@ class CrateListeners implements Listener
         };
 
         $player->sendMessage(TextFormat::GREEN . "Crate of type " . $crateType . " has been spawned!");
-    }
-
-    public function reducekey(Player $player, string $key): void
-    {
-        $meeting = SessionFactory::getInstance()
-            ->getSession($player);
-        match ($key) {
-            Names::Mage => $meeting->reduceKeyMage(),
-            Names::Ice => $meeting->reduceKeyIce(),
-            Names::Ender => $meeting->reduceKeyEnder(),
-            Names::Magma => $meeting->reduceKeyMagma(),
-            Names::Pegasus => $meeting->reduceKeyPegasus(),
-        };
-    }
-
-    public function getkey(Player $player, string $key): int
-    {
-        $meeting = SessionFactory::getInstance()
-            ->getSession($player);
-
-        return match ($key) {
-            Names::Mage => $meeting->getKeyMage(),
-            Names::Ice => $meeting->getKeyIce(),
-            Names::Ender => $meeting->getKeyEnder(),
-            Names::Magma => $meeting->getKeyMagma(),
-            Names::Pegasus => $meeting->getKeyPegasus(),
-            default => 0,
-        };
     }
 }

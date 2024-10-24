@@ -6,6 +6,7 @@ use pocketmine\player\Player;
 use Vecnavium\FormsUI\SimpleForm;
 use Nozell\Crates\Manager\LangManager;
 use Nozell\Crates\Session\SessionFactory;
+use Nozell\Crates\tags\Names;
 
 final class KeyMenu extends SimpleForm
 {
@@ -15,7 +16,7 @@ final class KeyMenu extends SimpleForm
             $this->handleResponse($player, $data);
         });
 
-        $meeting = SessionFactory::getInstance()
+        $session = SessionFactory::getInstance()
             ->getSession($player);
 
         $content = LangManager::getInstance()->generateMsg(
@@ -28,11 +29,11 @@ final class KeyMenu extends SimpleForm
                 "{pegasusKeys}",
             ],
             [
-                $meeting->getKeyMage(),
-                $meeting->getKeyIce(),
-                $meeting->getKeyEnder(),
-                $meeting->getKeyMagma(),
-                $meeting->getKeyPegasus(),
+                $session->getKey(Names::Mage),
+                $session->getKey(Names::Ice),
+                $session->getKey(Names::Ender),
+                $session->getKey(Names::Magma),
+                $session->getKey(Names::Pegasus),
             ]
         );
 
