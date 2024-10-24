@@ -11,7 +11,6 @@ use pocketmine\player\Player;
 use pocketmine\Server;
 use pocketmine\utils\SingletonTrait;
 use pocketmine\utils\TextFormat;
-use Profile;
 
 class SessionFactory
 {

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Nozell\Crates\Session;
+
 use Nozell\Crates\tags\Names;
 
 final class Profile
