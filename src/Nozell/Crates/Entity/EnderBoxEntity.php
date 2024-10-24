@@ -43,7 +43,7 @@ class EnderBoxEntity extends Living
 
     protected function getInitialSizeInfo(): EntitySizeInfo
     {
-        return new EntitySizeInfo(1.8, 0.8, 1.62);
+        return new EntitySizeInfo(1.2, 1.3, 1.3);
     }
 
     public function getName(): string
@@ -69,6 +69,7 @@ class EnderBoxEntity extends Living
             []
         );
         $this->setNameTag($floatingText);
+        
 
         return parent::onUpdate($currentTick);
     }

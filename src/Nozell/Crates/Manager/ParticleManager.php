@@ -50,30 +50,49 @@ final class ParticleManager
     public function setHorario(World $w, Vector3 $p, $particle): void
     {
         $size = 0.8;
-        $heightIncrement = min($this->particleCounter * 0.0, 1.34);
-        $x = $p->getX() + cos(deg2rad($this->particleCounter / 0.1)) * $size;
-        $y = $p->getY() + 1.5 + $heightIncrement;
-        $z = $p->getZ() + sin(deg2rad($this->particleCounter / 0.1)) * $size;
+        $angle = deg2rad($this->particleCounter * 7);
+
+        $heightIncrement = $this->particleCounter * 0.03;
+
+        $x = $p->getX() + cos($angle) * $size;
+        $y = $p->getY() + $heightIncrement;
+        $z = $p->getZ() + sin($angle) * $size;
 
         $pos = new Vector3($x, $y, $z);
+
         $w->addParticle($pos, $particle);
 
         $this->incrementParticleCounter();
+
+        if ($heightIncrement > 1.55) {
+            $this->particleCounter = 0;
+        }
     }
 
     public function setAntiHorario(World $w, Vector3 $p, $particle): void
     {
         $size = 0.8;
-        $heightIncrement = min($this->particleCounter * 0.0, 1.34);
-        $x = $p->getX() - cos(deg2rad($this->particleCounter / 0.1)) * $size;
-        $y = $p->getY() + 1.5 + $heightIncrement;
-        $z = $p->getZ() - sin(deg2rad($this->particleCounter / 0.1)) * $size;
+        $angle = deg2rad($this->particleCounter * 7);
+
+        $heightIncrement = $this->particleCounter * 0.03;
+
+        $x = $p->getX() - cos($angle) * $size;
+        $y = $p->getY() + $heightIncrement;
+        $z = $p->getZ() - sin($angle) * $size;
 
         $pos = new Vector3($x, $y, $z);
+
         $w->addParticle($pos, $particle);
 
         $this->incrementParticleCounter();
+
+        if ($heightIncrement > 1.55) {
+            $this->particleCounter = 0;
+        }
     }
+
+
+
 
     private function EndermanParticles(World $w, Vector3 $p, int $tick): void
     {
