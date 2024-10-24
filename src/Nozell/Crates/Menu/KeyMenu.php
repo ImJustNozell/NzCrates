@@ -3,9 +3,9 @@
 namespace Nozell\Crates\Menu;
 
 use pocketmine\player\Player;
-use Nozell\Crates\Meetings\MeetingManager;
 use Vecnavium\FormsUI\SimpleForm;
 use Nozell\Crates\Manager\LangManager;
+use Nozell\Crates\Session\SessionFactory;
 
 final class KeyMenu extends SimpleForm
 {
@@ -15,9 +15,8 @@ final class KeyMenu extends SimpleForm
             $this->handleResponse($player, $data);
         });
 
-        $meeting = MeetingManager::getInstance()
-            ->getMeeting($player)
-            ->getCratesData();
+        $meeting = SessionFactory::getInstance()
+            ->getSession($player);
 
         $content = LangManager::getInstance()->generateMsg(
             "keys-overview",

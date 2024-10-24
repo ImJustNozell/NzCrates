@@ -14,9 +14,7 @@ use Nozell\Crates\Listeners\CrateListeners;
 use Nozell\Crates\Listeners\EventListener;
 use Nozell\Crates\Manager\LangManager;
 use Nozell\Crates\tags\EntityIds;
-use pocketmine\resourcepacks\ZippedResourcePack;
 use pocketmine\Server;
-use Symfony\Component\Filesystem\Path;
 
 final class Loader
 {

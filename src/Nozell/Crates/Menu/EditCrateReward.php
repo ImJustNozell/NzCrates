@@ -33,7 +33,7 @@ class EditCrateReward extends SimpleForm
                 new SetItemsMenu($player, $this->crateType);
                 break;
             case 1:
-                new EditCrateChancesMenu($player, $this->crateType);
+                new EditCrateChances($player, $this->crateType);
                 break;
         }
     }

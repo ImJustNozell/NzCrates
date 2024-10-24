@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Nozell\Crates\Listeners;
 
-use Nozell\Crates\Meetings\MeetingManager;
+use Nozell\Crates\Session\SessionFactory;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
@@ -16,15 +16,13 @@ class EventListener implements Listener
     {
         $player = $event->getPlayer();
 
-        MeetingManager::getInstance()->createMeeting($player);
-
-        MeetingManager::getInstance()->getMeeting($player)->join();
+        SessionFactory::getInstance()->addSession($player);
     }
 
     public function onPlayerQuit(PlayerQuitEvent $event): void
     {
         $player = $event->getPlayer();
 
-        MeetingManager::getInstance()->getMeeting($player)->Close();
+        SessionFactory::getInstance()->removeSession($player);
     }
 }

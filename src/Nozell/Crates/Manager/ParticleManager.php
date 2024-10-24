@@ -49,8 +49,8 @@ final class ParticleManager
 
     public function setHorario(World $w, Vector3 $p, $particle): void
     {
-        $size = 0.6;
-        $heightIncrement = min($this->particleCounter * 0.02, 2);
+        $size = 0.8;
+        $heightIncrement = min($this->particleCounter * 0.02, 1.5);
         $x = $p->getX() + cos(deg2rad($this->particleCounter / 0.1)) * $size;
         $y = $p->getY() + 1.5 + $heightIncrement;
         $z = $p->getZ() + sin(deg2rad($this->particleCounter / 0.1)) * $size;
@@ -63,7 +63,7 @@ final class ParticleManager
 
     public function setAntiHorario(World $w, Vector3 $p, $particle): void
     {
-        $size = 0.6;
+        $size = 0.8;
         $heightIncrement = min($this->particleCounter * 0.02, 2);
         $x = $p->getX() - cos(deg2rad($this->particleCounter / 0.1)) * $size;
         $y = $p->getY() + 1.5 + $heightIncrement;

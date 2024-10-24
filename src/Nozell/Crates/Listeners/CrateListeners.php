@@ -9,19 +9,26 @@ use Nozell\Crates\Entity\IceBoxEntity;
 use Nozell\Crates\Entity\MageBoxEntity;
 use Nozell\Crates\Entity\MagmaBoxEntity;
 use Nozell\Crates\Entity\PegasusBoxEntity;
+
 use Nozell\Crates\Events\GiveAllKeysEvent;
 use Nozell\Crates\Events\GiveKeyEvent;
 use Nozell\Crates\Events\OpenCrateEvent;
 use Nozell\Crates\Events\SpawnCrateEvent;
+
 use Nozell\Crates\Main;
+
 use Nozell\Crates\Manager\CrateManager;
 use Nozell\Crates\Manager\LangManager;
-use Nozell\Crates\Meetings\MeetingManager;
+
+use Nozell\Crates\Session\SessionFactory;
+
 use Nozell\Crates\tags\Names;
 use Nozell\Crates\tags\Perms;
+
 use Nozell\Crates\Utils\CooldownTask;
 use Nozell\Crates\Utils\LavaParticleEffect;
 use Nozell\Crates\Utils\SoundEffect;
+
 use pocketmine\event\Listener;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\player\Player;
@@ -37,9 +44,8 @@ class CrateListeners implements Listener
         $player = $ev->getPlayer();
         $crate = $ev->getCrateLabel();
         $entity = $ev->getEntity();
-        $meeting = MeetingManager::getInstance()
-            ->getMeeting($player)
-            ->getCratesData();
+        $meeting = SessionFactory::getInstance()
+            ->getSession($player);
 
         if ($this->getkey($player, $crate) <= 0) {
             $msg = LangManager::getInstance()->generateMsg("no-keys", [], []);
@@ -135,9 +141,8 @@ class CrateListeners implements Listener
         $amount = $event->getAmount();
 
         foreach (Server::getInstance()->getOnlinePlayers() as $onlinePlayer) {
-            $meeting = MeetingManager::getInstance()
-                ->getMeeting($onlinePlayer)
-                ->getCratesData();
+            $meeting = SessionFactory::getInstance()
+                ->getSession($onlinePlayer);
 
             match ($keyType) {
                 Names::Mage => $meeting->addKeyMage($amount),
@@ -163,9 +168,8 @@ class CrateListeners implements Listener
         $keyType = $event->getKeyType();
         $amount = $event->getAmount();
 
-        $meeting = MeetingManager::getInstance()
-            ->getMeeting($receiver)
-            ->getCratesData();
+        $meeting = SessionFactory::getInstance()
+            ->getSession($receiver);
 
         match ($keyType) {
             Names::Mage => $meeting->addKeyMage($amount),
@@ -207,9 +211,8 @@ class CrateListeners implements Listener
 
     public function reducekey(Player $player, string $key): void
     {
-        $meeting = MeetingManager::getInstance()
-            ->getMeeting($player)
-            ->getCratesData();
+        $meeting = SessionFactory::getInstance()
+            ->getSession($player);
         match ($key) {
             Names::Mage => $meeting->reduceKeyMage(),
             Names::Ice => $meeting->reduceKeyIce(),
@@ -221,9 +224,8 @@ class CrateListeners implements Listener
 
     public function getkey(Player $player, string $key): int
     {
-        $meeting = MeetingManager::getInstance()
-            ->getMeeting($player)
-            ->getCratesData();
+        $meeting = SessionFactory::getInstance()
+            ->getSession($player);
 
         return match ($key) {
             Names::Mage => $meeting->getKeyMage(),

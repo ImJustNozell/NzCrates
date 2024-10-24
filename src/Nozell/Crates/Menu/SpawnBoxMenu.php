@@ -3,7 +3,6 @@
 namespace Nozell\Crates\Menu;
 
 use pocketmine\player\Player;
-use pocketmine\Server;
 use Vecnavium\FormsUI\CustomForm;
 use Nozell\Crates\Events\SpawnCrateEvent;
 use Nozell\Crates\Manager\LangManager;

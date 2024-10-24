@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Nozell\Crates\Data;
+namespace Nozell\Crates\Session;
 
-use Nozell\Crates\Meetings\Meeting;
 
-final class PlayerData
+final class Profile
 {
     public function __construct(
-        private readonly Meeting $meeting,
+        string $name,
         private int $keyMage = 0,
         private int $keyIce = 0,
         private int $keyEnder = 0,
