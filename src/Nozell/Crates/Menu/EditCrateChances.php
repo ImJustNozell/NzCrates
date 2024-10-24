@@ -8,6 +8,8 @@ use muqsit\invmenu\transaction\SimpleInvMenuTransaction;
 use muqsit\invmenu\transaction\InvMenuTransactionResult;
 use Nozell\Crates\Rewards\RewardManager;
 use Nozell\Crates\Manager\LangManager;
+use pocketmine\scheduler\ClosureTask;
+use Nozell\Crates\Main;
 
 class EditCrateChances
 {
@@ -27,28 +29,29 @@ class EditCrateChances
         $menu->setName(LangManager::getInstance()->generateMsg("edit-chances-menu", ["{crateType}"], [ucfirst($this->crateType)]));
 
         $rewards = $this->rewardManager->getRewardsForCrate($this->crateType);
-
         $inventory = $menu->getInventory();
 
         foreach ($rewards as $reward) {
             $item = $reward->getItem();
             $chance = $reward->getChance();
-
             $lore = ["Chance: " . $chance . "%"];
             $item->setLore($lore);
-
             $inventory->setItem($reward->getSlot(), $item);
         }
 
-        $menu->setListener(function (SimpleInvMenuTransaction $transaction) use ($player, $menu): InvMenuTransactionResult {
-            $clickedItem = $transaction->getItemClicked();
+        $menu->setListener(function (SimpleInvMenuTransaction $transaction) use ($player): InvMenuTransactionResult {
             $slot = $transaction->getAction()->getSlot();
-
             $reward = $this->rewardManager->getRewardForSlot($this->crateType, $slot);
-            if ($reward !== null) {
-                $player->removeCurrentWindow();
 
-                new EditChanceForm($player, $reward);
+            if ($reward !== null) {
+                $transaction->getPlayer()->removeCurrentWindow();
+
+                Main::getInstance()->getScheduler()->scheduleDelayedTask(
+                    new ClosureTask(function () use ($player, $reward): void {
+                        new EditChanceForm($player, $reward);
+                    }),
+                    10
+                );
             }
 
             return $transaction->discard();
