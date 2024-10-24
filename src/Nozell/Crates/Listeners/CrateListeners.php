@@ -85,7 +85,7 @@ class CrateListeners implements Listener
 
                         $item->setLore([]);
 
-                        $item->setLore(["Obtenido de " . $crate]);
+                        $item->setLore([TextFormat::YELLOW . "Obtenido de crate " . ucfirst($crate)]);
 
                         $playerInventory->addItem($item);
 
