@@ -1,17 +1,17 @@
 {
-    "name": "nozell/nzcrates",
-    "description": "Crates with entitys plugin.",
-    "type": "project",
-    "license": "Apache-2.0",
-    "require": {
-      "pocketmine/pocketmine-mp": "^5.19",
-      "customiesdevs/customies": "dev-main",
-      "muqsit/invmenu": "^4.6",
-      "nozell/formsui": "^1.0"
-    },
-    "autoload": {
-      "psr-0": {
-        "Nozell\\Crates\\": "src"
-      }
+  "name": "nozell/nzcrates",
+  "description": "Crates with entitys plugin.",
+  "type": "project",
+  "license": "Apache-2.0",
+  "require": {
+    "pocketmine/pocketmine-mp": "^5.19",
+    "customiesdevs/customies": "dev-main",
+    "muqsit/invmenu": "^4.6",
+    "nozell/formsui": "^1.0"
+  },
+  "autoload": {
+    "psr-0": {
+      "Nozell\\Crates\\": "src"
     }
   }
+}

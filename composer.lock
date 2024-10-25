@@ -131,12 +131,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/RedTv-Developpement/Customies.git",
-                "reference": "17434e04887b3782a875f9331d03297deaaa0d24"
+                "reference": "7c3c6b595119f5b1146fb803143473f8997c32e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RedTv-Developpement/Customies/zipball/17434e04887b3782a875f9331d03297deaaa0d24",
-                "reference": "17434e04887b3782a875f9331d03297deaaa0d24",
+                "url": "https://api.github.com/repos/RedTv-Developpement/Customies/zipball/7c3c6b595119f5b1146fb803143473f8997c32e4",
+                "reference": "7c3c6b595119f5b1146fb803143473f8997c32e4",
                 "shasum": ""
             },
             "default-branch": true,
@@ -157,7 +157,7 @@
                 "issues": "https://github.com/RedTv-Developpement/Customies/issues",
                 "source": "https://github.com/RedTv-Developpement/Customies/tree/main"
             },
-            "time": "2024-09-17T13:03:43+00:00"
+            "time": "2024-10-03T13:55:05+00:00"
         },
         {
             "name": "muqsit/invmenu",
