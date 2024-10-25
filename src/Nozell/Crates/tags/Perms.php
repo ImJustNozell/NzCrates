@@ -2,8 +2,8 @@
 
 namespace Nozell\Crates\tags;
 
-final class Perms
+enum Perms
 {
-    public const Admin = "nzcrates.admin";
-    public const Default = "nzcrates.default";
+    const Admin = "nzcrates.admin";
+    const Default = "nzcrates.default";
 }

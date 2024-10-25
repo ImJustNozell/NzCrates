@@ -2,11 +2,11 @@
 
 namespace Nozell\Crates\tags;
 
-final class Names
+enum Names
 {
-    public const Ender = "ender";
-    public const Magma = "magma";
-    public const Ice = "ice";
-    public const Pegasus = "pegasus";
-    public const Mage = "mage";
+    const Ender = "ender";
+    const Magma = "magma";
+    const Ice = "ice";
+    const Pegasus = "pegasus";
+    const Mage = "mage";
 }
