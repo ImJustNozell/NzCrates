@@ -28,7 +28,7 @@ final class ParticleManager
         switch ($type) {
             case ParticleIds::Magma:
                 $this->setHorario($w, $p, new FlameParticle());
-                $this->setAntiHorario($w, $p, new LavaParticle());
+                $this->setAntiHorario($w, $p, new FlameParticle());
                 break;
             case ParticleIds::Ice:
                 $this->setHorario($w, $p, new WaterDripParticle());

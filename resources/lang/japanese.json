@@ -60,5 +60,7 @@
   "open-crate-tip": "クレートを開く {crate}",
   "edit-item-label": "アイテムの確率を編集: {itemName}",
   "new-chance-label": "新しい確率:",
-  "new-chance-placeholder": "新しい確率を入力してください"
+  "new-chance-placeholder": "新しい確率を入力してください",
+  "crate-lore": "クレート {crate} から取得",
+  "set-items-menu": "{crateType} クレートのアイテムを設定"
 }

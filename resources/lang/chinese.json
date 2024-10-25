@@ -60,5 +60,7 @@
   "open-crate-tip": "打开箱子 {crate}",
   "edit-item-label": "编辑物品的概率: {itemName}",
   "new-chance-label": "新概率:",
-  "new-chance-placeholder": "请输入新的概率"
+  "new-chance-placeholder": "请输入新的概率",
+  "crate-lore": "从箱子 {crate} 获得",
+  "set-items-menu": "设置 {crateType} 箱子的物品"
 }

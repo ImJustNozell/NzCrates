@@ -60,5 +60,7 @@
   "open-crate-tip": "To open the crate {crate}",
   "edit-item-label": "Editing the chance for item: {itemName}",
   "new-chance-label": "New chance:",
-  "new-chance-placeholder": "Enter the new chance"
+  "new-chance-placeholder": "Enter the new chance",
+  "crate-lore": "Obtained from crate {crate}",
+  "set-items-menu": "Set items for crate {crateType}"
 }

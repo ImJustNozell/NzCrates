@@ -60,5 +60,7 @@
   "open-crate-tip": "Kasayı açmak için {crate}",
   "edit-item-label": "Öğenin şansını düzenleme: {itemName}",
   "new-chance-label": "Yeni şans:",
-  "new-chance-placeholder": "Yeni şansı girin"
+  "new-chance-placeholder": "Yeni şansı girin",
+  "crate-lore": "Kasa {crate}'den elde edildi",
+  "set-items-menu": "Kasa {crateType} için öğeleri ayarla"
 }

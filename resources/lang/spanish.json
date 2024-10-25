@@ -60,5 +60,7 @@
   "open-crate-tip": "Para abrir la caja {crate}",
   "edit-item-label": "Editando la probabilidad para el ítem: {itemName}",
   "new-chance-label": "Nueva probabilidad:",
-  "new-chance-placeholder": "Ingrese la nueva probabilidad"
+  "new-chance-placeholder": "Ingrese la nueva probabilidad",
+  "crate-lore": "Obtenido de la caja {crate}",
+  "set-items-menu": "Establecer los ítems para la caja {crateType}"
 }
