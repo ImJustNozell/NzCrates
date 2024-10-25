@@ -51,9 +51,7 @@
 </p>
 
 </td>
-<td width="50%" align="center">
-
-<img src="https://metrics.lecoq.io/imjustnozell?template=classic&achievements=1&achievements.threshold=C&achievements.secrets=true&achievements.display=compact&achievements.limit=0&config.timezone=America%2FLima" alt="Metrics for imjustnozell">
+<td width="50%" align="center"><img src="https://github.com/Mo-Alsehli/Mo-Alsehli/assets/98949843/7b841857-16fb-422d-9297-be42e3eaf3a9" height = 250px
 
   </td>
 </tr>
