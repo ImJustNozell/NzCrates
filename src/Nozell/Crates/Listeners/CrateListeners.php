@@ -26,7 +26,7 @@ use Nozell\Crates\tags\Names;
 use Nozell\Crates\tags\Perms;
 
 use Nozell\Crates\Utils\CooldownTask;
-use Nozell\Crates\Utils\LavaParticleEffect;
+use Nozell\Crates\Utils\ParticleEffect;
 use Nozell\Crates\Utils\SoundEffect;
 
 use pocketmine\event\Listener;
@@ -37,7 +37,7 @@ use pocketmine\utils\TextFormat;
 
 class CrateListeners implements Listener
 {
-    use SoundEffect, LavaParticleEffect;
+    use SoundEffect, ParticleEffect;
 
     public function OpenCrate(OpenCrateEvent $ev): void
     {
@@ -110,25 +110,31 @@ class CrateListeners implements Listener
             ],
             [
                 "actions" => [
-                    function () use ($player) {
+                    function () use ($player, $entity, $crate) {
                         $player->sendTitle(TextFormat::colorize("&e1"), "", 5, 20, 5);
+                        $player->sendTip("To  open crate " . ucfirst($crate));
                         self::playSound($player, "note.harp", 100, 500);
+                        self::SecondParticles($entity->getWorld(), $entity->getPosition());
                     },
                 ],
             ],
             [
                 "actions" => [
-                    function () use ($player) {
+                    function () use ($player, $entity, $crate) {
                         $player->sendTitle(TextFormat::colorize("&g2"), "", 5, 20, 5);
+                        $player->sendTip("To  open crate " . ucfirst($crate));
                         self::playSound($player, "note.harp", 100, 500);
+                        self::SecondParticles($entity->getWorld(), $entity->getPosition());
                     },
                 ],
             ],
             [
                 "actions" => [
-                    function () use ($player) {
+                    function () use ($player, $entity, $crate) {
                         $player->sendTitle(TextFormat::colorize("&63"), "", 5, 20, 5);
+                        $player->sendTip("To  open crate " . ucfirst($crate));
                         self::playSound($player, "note.harp", 100, 500);
+                        self::SecondParticles($entity->getWorld(), $entity->getPosition());
                     },
                 ],
             ],
