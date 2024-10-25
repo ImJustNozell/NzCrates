@@ -5,7 +5,7 @@ branches:
 projects:
   NzCrates:
     path: ""
-    icon: "asesst/icon.gif"
+    icon: "icon.gif"
     lint:
       phpstan: false
     libs:
