@@ -20,8 +20,10 @@ class EditChanceForm extends CustomForm
         });
 
         $this->setTitle(LangManager::getInstance()->generateMsg("edit-chance-title", [], []));
-        $this->addLabel("Editing chance for item: " . $this->reward->getItem()->getName());
-        $this->addInput("New chance:", "Enter new chance", (string)$this->reward->getChance());
+
+        $this->addLabel(LangManager::getInstance()->generateMsg("edit-item-label", ["{itemName}"], [$this->reward->getItem()->getName()]));
+
+        $this->addInput(LangManager::getInstance()->generateMsg("new-chance-label", [], []), LangManager::getInstance()->generateMsg("new-chance-placeholder", [], []), (string)$this->reward->getChance());
 
         $player->sendForm($this);
     }

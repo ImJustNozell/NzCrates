@@ -37,25 +37,28 @@
   "items-saved": "§aItems saved to the '{crateType}' crate.",
   "form-title-spawn-crate": "Spawn Crate",
   "crate-spawned": "§aCrate '{crateType}' spawned at your current location.",
-  "ender-floating-text": "§l§5Ender Crate\n§r§7- Interact to obtain incredible rewards!",
-  "ice-floating-text": "§l§bIce Crate\n§r§7- Interact to obtain frozen rewards!",
-  "mage-floating-text": "§l§dMage Crate\n§r§7- Interact to obtain magical powers!",
-  "magma-floating-text": "§l§cMagma Crate\n§r§7- Interact to obtain fiery rewards!",
-  "pegasus-floating-text": "§l§6Pegasus Crate\n§r§7- Interact to obtain legendary rewards!",
-
+  "ender-floating-text": "§l§5Ender Crate§r\n§6- §7Interact to obtain \n§6incredible rewards!§r\n§r§7- §eBuy at:§bwww.shop.com",
+  "ice-floating-text": "§l§bIce Crate§r\n§6- §7Interact to obtain \n§6frozen rewards!§r\n§r§7- §eBuy at:§bwww.shop.com",
+  "mage-floating-text": "§l§dMage Crate§r\n§6- §7Interact to obtain \n§6magical powers!§r\n§r§7- §eBuy at:§bwww.shop.com",
+  "magma-floating-text": "§l§cMagma Crate§r\n§6- §7Interact to obtain \n§6fiery rewards!§r\n§r§7- §eBuy at:§bwww.shop.com",
+  "pegasus-floating-text": "§l§6Pegasus Crate§r\n§6- §7Interact to obtain \n§6legendary rewards!§r\n§r§7- §eBuy at:§bwww.shop.com",
   "select-crate-type": "Select a Crate Type",
   "mage-crate": "Mage Crate",
   "ice-crate": "Ice Crate",
   "ender-crate": "Ender Crate",
   "magma-crate": "Magma Crate",
   "pegasus-crate": "Pegasus Crate",
-
   "edit-crate-rewards": "Edit Crate Rewards",
   "edit-crate-items": "Edit Crate Items",
   "edit-crate-chances": "Edit Crate Chances",
-
   "edit-chances-menu": "Edit Chances for {crateType} Crate",
-
   "edit-chance-title": "Edit Item Chance",
-  "chance-updated": "Chance successfully updated!"
+  "chance-updated": "Chance successfully updated!",
+  "title-countdown-1": "&e1",
+  "title-countdown-2": "&a2",
+  "title-countdown-3": "&63",
+  "open-crate-tip": "To open the crate {crate}",
+  "edit-item-label": "Editing the chance for item: {itemName}",
+  "new-chance-label": "New chance:",
+  "new-chance-placeholder": "Enter the new chance"
 }

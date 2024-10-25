@@ -14,17 +14,16 @@ use Nozell\Crates\Manager\ParticleManager;
 use Nozell\Crates\Manager\LangManager;
 use Nozell\Crates\tags\EntityIds;
 use Nozell\Crates\tags\Names;
+use Nozell\Crates\tags\ParticleIds;
 use Nozell\Crates\tags\Perms;
 use pocketmine\item\Sword;
 
 class PegasusBoxEntity extends Living
 {
-    private ParticleManager $particleManager;
 
     public function __construct(Location $location, ?CompoundTag $nbt = null)
     {
         parent::__construct($location, $nbt);
-        $this->particleManager = new ParticleManager();
         $this->setNameTagAlwaysVisible(true);
         $this->setHasGravity(false);
         $this->spawnToAll();
@@ -55,7 +54,7 @@ class PegasusBoxEntity extends Living
         $pos = $this->getPosition();
         $world = $this->getWorld();
 
-        $this->particleManager->sendParticles($world, $pos, "villager");
+        ParticleManager::getInstance()->sendParticles($world, $pos, ParticleIds::Pegasus);
 
         $floatingText = LangManager::getInstance()->generateMsg(
             "pegasus-floating-text",

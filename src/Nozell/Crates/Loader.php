@@ -14,45 +14,43 @@ use Nozell\Crates\Listeners\CrateListeners;
 use Nozell\Crates\Listeners\EventListener;
 use Nozell\Crates\Manager\LangManager;
 use Nozell\Crates\tags\EntityIds;
+use pocketmine\resourcepacks\ZippedResourcePack;
 use pocketmine\Server;
+use Symfony\Component\Filesystem\Path;
 
-final class Loader
+class Loader
 {
+    public function __construct(public Main $main)
+    {
+        $this->LoadAll($main);
+    }
     public const Humanoid = "minecraft:humanoid";
 
-    public static function LoadAll(): void
+    public function LoadAll(Main $main): void
     {
-        self::LoadInvmenu();
-        self::LoadLangs();
-        self::RegisterEntities();
+        $this->LoadInvmenu($main);
+        $this->LoadLangs($main);
+        $this->LoadResourcepack($main);
+        $this->RegisterEntities();
 
         Main::getInstance()->getServer()->getPluginManager()
-            ->registerEvents(new EventListener(), Main::getInstance());
+            ->registerEvents(new EventListener(), $main);
 
         Main::getInstance()->getServer()->getPluginManager()
-            ->registerEvents(new CrateListeners(), Main::getInstance());
+            ->registerEvents(new CrateListeners(), $main);
 
-        Server::getInstance()
-            ->getCommandMap()
-            ->register(
-                "crates",
-                new CratesCommand(
-                    "crates",
-                    "Abre el menú principal de crates",
-                    "/crates"
-                )
-            );
+        Server::getInstance()->getCommandMap()
+            ->register("crates", new CratesCommand("crates", "Abre el menú principal de crates", "/crates"));
     }
 
-    public static function LoadInvmenu(): void
+    public function LoadInvmenu(Main $main): void
     {
         if (!InvMenuHandler::isRegistered()) {
-            InvMenuHandler::register(Main::getInstance());
+            InvMenuHandler::register($main);
         }
     }
-    public static function LoadLangs(): void
+    public function LoadLangs(Main $main): void
     {
-        $main = Main::getInstance();
         $main->saveResource("lang/chinese.json");
         $main->saveResource("lang/english.json");
         $main->saveResource("lang/french.json");
@@ -63,7 +61,7 @@ final class Loader
         LangManager::getInstance()->loadLangs();
     }
 
-    public static function RegisterEntities(): void
+    public function RegisterEntities(): void
     {
         CustomiesEntityFactory::getInstance()->registerEntity(
             MageBoxEntity::class,
@@ -100,8 +98,27 @@ final class Loader
         );
     }
 
-    public static function LoadResourcepack()
+    public function LoadResourcepack(Main $main)
     {
-        
+
+        $main->saveResource("Crates.mcpack");
+
+        $rpManager = Server::getInstance()->getResourcePackManager();
+
+        $rpManager->setResourceStack(
+            array_merge($rpManager->getResourceStack(), [
+                new ZippedResourcePack(
+                    Path::join(
+                        $main->getDataFolder(),
+                        "Crates.mcpack"
+                    )
+                ),
+            ])
+        );
+
+        (new \ReflectionProperty($rpManager, "serverForceResources"))->setValue(
+            $rpManager,
+            true
+        );
     }
 }

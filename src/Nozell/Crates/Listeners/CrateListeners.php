@@ -57,7 +57,8 @@ class CrateListeners implements Listener
         $reward = CrateManager::getInstance()->getRandomItemFromCrate($crate);
 
         if ($reward === null) {
-            $player->sendMessage("Esta crate no tiene premios.");
+            $msg = LangManager::getInstance()->generateMsg("no-rewards", [], []);
+            $player->sendMessage($msg);
             $ev->cancel();
             return;
         }
@@ -65,13 +66,17 @@ class CrateListeners implements Listener
         $item = $reward->getItem();
 
         if ($item === null) {
-            $player->sendMessage("No se pudo obtener un ítem de esta crate.");
+            $msg = LangManager::getInstance()->generateMsg("no-item", [], []);
+            $player->sendMessage($msg);
             $ev->cancel();
             return;
         }
+
         $playerInventory = $player->getInventory();
 
         if (!$playerInventory->canAddItem($item)) {
+            $msg = LangManager::getInstance()->generateMsg("inventory-full", [], []);
+            $player->sendMessage($msg);
             $ev->cancel();
             return;
         }
@@ -84,16 +89,12 @@ class CrateListeners implements Listener
                         $player->sendMessage(TextFormat::colorize($msg));
 
                         $item->setLore([]);
-
-                        $item->setLore([TextFormat::YELLOW . "Obtenido de crate " . ucfirst($crate)]);
+                        $item->setLore([TextFormat::YELLOW . LangManager::getInstance()->generateMsg("crate-lore", ["{crate}"], [ucfirst($crate)])]);
 
                         $playerInventory->addItem($item);
-
-
                         $session->reduceKey($crate);
 
                         self::playSound($player, "firework.twinkle", 100, 500);
-
                         self::addLavaParticles($entity->getWorld(), $entity->getPosition());
 
                         $onlinePlayers = Server::getInstance()->getOnlinePlayers();
@@ -101,7 +102,7 @@ class CrateListeners implements Listener
                             $wonAlertMsg = LangManager::getInstance()->generateMsg(
                                 "won-alert",
                                 ["{userName}", "{itemName}", "{crateName}"],
-                                [$player->getName(), $item->getName(), $crate]
+                                [$player->getName(), $item->getName(), ucfirst($crate)]
                             );
                             $onlinePlayer->sendTip(TextFormat::colorize($wonAlertMsg));
                         }
@@ -111,8 +112,12 @@ class CrateListeners implements Listener
             [
                 "actions" => [
                     function () use ($player, $entity, $crate) {
-                        $player->sendTitle(TextFormat::colorize("&e1"), "", 5, 20, 5);
-                        $player->sendTip("To  open crate " . ucfirst($crate));
+                        $msgTitle = LangManager::getInstance()->generateMsg("title-countdown-1", [], []);
+                        $msgTip = LangManager::getInstance()->generateMsg("open-crate-tip", ["{crate}"], [ucfirst($crate)]);
+
+                        $player->sendTitle(TextFormat::colorize($msgTitle), "", 5, 20, 5);
+                        $player->sendTip($msgTip);
+
                         self::playSound($player, "note.harp", 100, 500);
                         self::SecondParticles($entity->getWorld(), $entity->getPosition());
                     },
@@ -121,8 +126,12 @@ class CrateListeners implements Listener
             [
                 "actions" => [
                     function () use ($player, $entity, $crate) {
-                        $player->sendTitle(TextFormat::colorize("&g2"), "", 5, 20, 5);
-                        $player->sendTip("To  open crate " . ucfirst($crate));
+                        $msgTitle = LangManager::getInstance()->generateMsg("title-countdown-2", [], []);
+                        $msgTip = LangManager::getInstance()->generateMsg("open-crate-tip", ["{crate}"], [ucfirst($crate)]);
+
+                        $player->sendTitle(TextFormat::colorize($msgTitle), "", 5, 20, 5);
+                        $player->sendTip($msgTip);
+
                         self::playSound($player, "note.harp", 100, 500);
                         self::SecondParticles($entity->getWorld(), $entity->getPosition());
                     },
@@ -131,8 +140,12 @@ class CrateListeners implements Listener
             [
                 "actions" => [
                     function () use ($player, $entity, $crate) {
-                        $player->sendTitle(TextFormat::colorize("&63"), "", 5, 20, 5);
-                        $player->sendTip("To  open crate " . ucfirst($crate));
+                        $msgTitle = LangManager::getInstance()->generateMsg("title-countdown-3", [], []);
+                        $msgTip = LangManager::getInstance()->generateMsg("open-crate-tip", ["{crate}"], [ucfirst($crate)]);
+
+                        $player->sendTitle(TextFormat::colorize($msgTitle), "", 5, 20, 5);
+                        $player->sendTip($msgTip);
+
                         self::playSound($player, "note.harp", 100, 500);
                         self::SecondParticles($entity->getWorld(), $entity->getPosition());
                     },
@@ -144,40 +157,24 @@ class CrateListeners implements Listener
         $scheduler->scheduleRepeatingTask(new CooldownTask($player, $actionsQueue), 20);
     }
 
-
     public function onGiveAllKeys(GiveAllKeysEvent $event): void
     {
-        $player = $event->getPlayer();
-        $keyType = $event->getKeyType();
-        $amount = $event->getAmount();
-
         foreach (Server::getInstance()->getOnlinePlayers() as $onlinePlayer) {
-            $session = SessionFactory::getInstance()
-                ->getSession($onlinePlayer);
+            $session = SessionFactory::getInstance()->getSession($onlinePlayer);
+            $session->addKey($event->getKeyType(), $event->getAmount());
 
-            $session->addKey($keyType, $amount);
-
-            $msg = LangManager::getInstance()
-                ->generateMsg("received-keys", ["{amount}", "{keyType}"], [$amount, $keyType]);
+            $msg = LangManager::getInstance()->generateMsg("received-keys", ["{amount}", "{keyType}"], [$event->getAmount(), $event->getKeyType()]);
             $onlinePlayer->sendMessage($msg);
         }
     }
 
     public function onGiveKey(GiveKeyEvent $event): void
     {
-        $sender = $event->getSender();
-        $receiver = $event->getReceiver();
-        $keyType = $event->getKeyType();
-        $amount = $event->getAmount();
+        $session = SessionFactory::getInstance()->getSession($event->getReceiver());
+        $session->addKey($event->getKeyType(), $event->getAmount());
 
-        $session = SessionFactory::getInstance()
-            ->getSession($receiver);
-
-        $session->addKey($keyType, $amount);
-
-        $msg = LangManager::getInstance()
-            ->generateMsg("received-keys", ["{amount}", "{keyType}"], [$amount, $keyType]);
-        $receiver->sendMessage($msg);
+        $msg = LangManager::getInstance()->generateMsg("received-keys", ["{amount}", "{keyType}"], [$event->getAmount(), $event->getKeyType()]);
+        $event->getReceiver()->sendMessage($msg);
     }
 
     public function onSpawnCrate(SpawnCrateEvent $event): void
@@ -186,7 +183,8 @@ class CrateListeners implements Listener
         $crateType = $event->getCrateType();
 
         if (!$player->hasPermission(Perms::Admin)) {
-            $player->sendMessage(TextFormat::RED . "You do not have permission to spawn crates.");
+            $msg = LangManager::getInstance()->generateMsg("no-permission", [], []);
+            $player->sendMessage($msg);
             $event->cancel();
             return;
         }
@@ -199,6 +197,7 @@ class CrateListeners implements Listener
             Names::Pegasus => new PegasusBoxEntity($player->getLocation(), new CompoundTag()),
         };
 
-        $player->sendMessage(TextFormat::GREEN . "Crate of type " . $crateType . " has been spawned!");
+        $msg = LangManager::getInstance()->generateMsg("crate-spawned", ["{crateType}"], [$crateType]);
+        $player->sendMessage(TextFormat::GREEN . $msg);
     }
 }

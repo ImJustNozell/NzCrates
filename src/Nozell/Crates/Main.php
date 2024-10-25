@@ -23,30 +23,15 @@ class Main extends PluginBase implements Listener
     {
         self::setInstance($this);
         $startTime = microtime(true);
-        $this->saveResource("Crates.mcpack");
-        $rpManager = Server::getInstance()->getResourcePackManager();
-
-        $rpManager->setResourceStack(
-            array_merge($rpManager->getResourceStack(), [
-                new ZippedResourcePack(
-                    Path::join(
-                        $this->getDataFolder(),
-                        "Crates.mcpack"
-                    )
-                ),
-            ])
-        );
-
-        (new \ReflectionProperty($rpManager, "serverForceResources"))->setValue(
-            $rpManager,
-            true
-        );
+        new Loader($this);
+        
+        
 
         CrateManager::getInstance()->loadAllCratesIntoCache();
 
         Server::getInstance()->getLogger()->debug("NzCrates enabling");
 
-        Loader::LoadAll();
+
 
         $endTime = microtime(true);
         $executionTime = ($endTime - $startTime);
