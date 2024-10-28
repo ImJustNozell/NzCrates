@@ -62,7 +62,7 @@
 
 [🎮 Únete al Discord | Join Discord](https://discord.gg/NvxR2SCyQY)  
 [📹 Síguenos en YouTube | Follow us on YouTube](https://www.youtube.com/@Nozell)  
-[🎵 Síguenos en TikTok | Follow us on TikTok](https://www.tiktok.com/@imjustnozell)
+[🎵 Síguenos en TikTok | Follow us on TikTok](https://www.tiktok.com/@nozell_darkwind)
 
 ---
 
