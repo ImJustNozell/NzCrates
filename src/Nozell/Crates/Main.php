@@ -37,10 +37,10 @@ class Main extends PluginBase implements Listener
         $executionTime = ($endTime - $startTime);
 
         if ($executionTime < 1) {
-            $executionTimeMilliseconds = $executionTime * 1_000;
+            $execution = $executionTime * 1_000;
             Server::getInstance()
                 ->getLogger()
-                ->info("NzCrates enabled in " . round($executionTimeMilliseconds, 2) . " ms.");
+                ->info("NzCrates enabled in " . round($execution, 2) . " ms.");
         } else {
             Server::getInstance()
                 ->getLogger()
