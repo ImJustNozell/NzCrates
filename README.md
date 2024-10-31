@@ -51,7 +51,7 @@
 </p>
 
 </td>
-<td width="50%" align="center"><img src="https://github.com/Mo-Alsehli/Mo-Alsehli/assets/98949843/7b841857-16fb-422d-9297-be42e3eaf3a9" height = 250px
+<td width="50%" align="center"><img src="https://raw.githubusercontent.com/TanZng/TanZng/master/assets/hollor_knight3.gif" width="200"/> 
 
   </td>
 </tr>
