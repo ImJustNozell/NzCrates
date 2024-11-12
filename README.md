@@ -2,17 +2,17 @@
 
 ---
 
-![GitHub followers](https://img.shields.io/github/followers/imjustnozell) ![GitHub Repo stars](https://img.shields.io/github/stars/imjustnozell/nzcrates) ![GitHub language count](https://img.shields.io/github/languages/count/imjustnozell/nzcrates)
-![GitHub top language](https://img.shields.io/github/languages/top/imjustnozell/nzcrates)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/t/imjustnozell/nzcrates)
-![GitHub contributors](https://img.shields.io/github/contributors/imjustnozell/nzcrates)
-![GitHub Created At](https://img.shields.io/github/created-at/imjustnozell/nzcrates)
+![GitHub followers](https://img.shields.io/github/followers/lyvaris) ![GitHub Repo stars](https://img.shields.io/github/stars/lyvaris/nzcrates) ![GitHub language count](https://img.shields.io/github/languages/count/lyvaris/nzcrates)
+![GitHub top language](https://img.shields.io/github/languages/top/lyvaris/nzcrates)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/lyvaris/nzcrates)
+![GitHub contributors](https://img.shields.io/github/contributors/lyvaris/nzcrates)
+![GitHub Created At](https://img.shields.io/github/created-at/lyvaris/nzcrates)
 
 <table align="center">
 <tr border="none">
 <td width="50%" align="left">
   
-- <img src="https://komarev.com/ghpvc/?username=imjustnozell&label=Profile%20views&color=0e75b6&style=flat" alt="Nozell" /> </p>
+- <img src="https://komarev.com/ghpvc/?username=lyvaris&label=Profile%20views&color=0e75b6&style=flat" alt="Nozell" /> </p>
 
 - 💻 Passionate about **Arduino Projects, PLC Automation & Web Development**
 
@@ -33,9 +33,9 @@
     <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Badge" />
   </a>
 
-  <img src="https://img.shields.io/github/stars/imjustnozell?style=for-the-badge" alt="GitHub User's stars" />
+  <img src="https://img.shields.io/github/stars/lyvaris?style=for-the-badge" alt="GitHub User's stars" />
 
-  <img src="https://img.shields.io/github/followers/imjustnozell?style=for-the-badge" alt="GitHub followers" />
+  <img src="https://img.shields.io/github/followers/lyvaris?style=for-the-badge" alt="GitHub followers" />
 
 </p>
 
