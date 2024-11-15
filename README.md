@@ -2,67 +2,16 @@
 
 ---
 
-![GitHub followers](https://img.shields.io/github/followers/Nozell) ![GitHub Repo stars](https://img.shields.io/github/stars/Nozell/nzcrates) ![GitHub language count](https://img.shields.io/github/languages/count/Nozell/nzcrates)
-![GitHub top language](https://img.shields.io/github/languages/top/Nozell/nzcrates)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/t/Nozell/nzcrates)
-![GitHub contributors](https://img.shields.io/github/contributors/Nozell/nzcrates)
-![GitHub Created At](https://img.shields.io/github/created-at/Nozell/nzcrates)
+![GitHub followers](https://img.shields.io/github/followers/ImJustnozell) ![GitHub Repo stars](https://img.shields.io/github/stars/ImJustnozell/nzcrates) ![GitHub language count](https://img.shields.io/github/languages/count/ImJustnozell/nzcrates)
+![GitHub top language](https://img.shields.io/github/languages/top/ImJustnozell/nzcrates)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/ImJustnozell/nzcrates)
+![GitHub contributors](https://img.shields.io/github/contributors/ImJustnozell/nzcrates)
+![GitHub Created At](https://img.shields.io/github/created-at/ImJustnozell/nzcrates)
 
-<table align="center">
-<tr border="none">
-<td width="50%" align="left">
-  
-- <img src="https://komarev.com/ghpvc/?username=Nozell&label=Profile%20views&color=0e75b6&style=flat" alt="Nozell" /> </p>
-
-- 💻 Passionate about **Arduino Projects, PLC Automation & Web Development**
-
-- <p>
-    <a href="https://www.paypal.com/paypalme/vNozell" target="_blank" rel="noopener noreferrer">
-      <img src="https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white" alt="PayPal Badge" />
-    </a>
-  </p>
-
-- <p>
-    <a href="mailto:imjustNozell@gmail.com" target="_blank" rel="noopener noreferrer">
-      <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail Badge" />
-    </a>
-  </p>
-
-- <p>
-  <a href="https://github.com/ImJustNozell" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Badge" />
-  </a>
-
-  <img src="https://img.shields.io/github/stars/Nozell?style=for-the-badge" alt="GitHub User's stars" />
-
-  <img src="https://img.shields.io/github/followers/Nozell?style=for-the-badge" alt="GitHub followers" />
-
-</p>
-
-- <p>
-  <a href="https://www.youtube.com/channel/UCg4BM8oOB_kP9c6lz3fvLng" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube Badge" />
-  </a>
-
-  <img src="https://img.shields.io/youtube/channel/subscribers/UCg4BM8oOB_kP9c6lz3fvLng?style=for-the-badge" alt="YouTube Subscribers" />
-
-  <img src="https://img.shields.io/youtube/channel/views/UCg4BM8oOB_kP9c6lz3fvLng?style=for-the-badge" alt="YouTube Views" />
-
-</p>
-
-</td>
-<td width="50%" align="center"><img src="https://raw.githubusercontent.com/TanZng/TanZng/master/assets/hollor_knight3.gif" width="200"/>
-
-  </td>
-</tr>
-</table>
 
 **ES**: **NzCrates** es un plugin para **PocketMine-MP** que te permite **crear** y **gestionar crates** (cajas de recompensas) con soporte para **entidades**, **animaciones** y **partículas**. ¡Todo es **editable** desde el juego utilizando ítems del mismo!  
 **EN**: **NzCrates** is a plugin for **PocketMine-MP** that allows you to **create** and **manage crates** (reward boxes) with support for **entities**, **animations**, and **particles**. Everything is **editable** directly in-game using items!
 
-[🎮 Únete al Discord | Join Discord](https://discord.gg/NvxR2SCyQY)  
-[📹 Síguenos en YouTube | Follow us on YouTube](https://www.youtube.com/@Nozell)  
-[🎵 Síguenos en TikTok | Follow us on TikTok](https://www.tiktok.com/@Nozell_darkwind)
 
 ---
 
@@ -72,7 +21,7 @@
 - 📦 **Libs**:
   - [`Customies`](https://github.com/CustomiesDevs/Customies): Para registro de entidades | For entity registration.
   - [`Invmenu`](https://github.com/Muqsit/InvMenu): Para la interacción de inventarios | For inventory interaction.
-  - [`FormsUi`](https://github.com/ImJustNozell/FormsUI): Para los menús en UI | For UI menus.
+  - [`FormsUi`](https://github.com/ImJustnozell/FormsUI): Para los menús en UI | For UI menus.
 
 ---
 
