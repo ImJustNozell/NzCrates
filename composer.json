@@ -1,5 +1,5 @@
 {
-  "name": "lyvaris/nzcrates",
+  "name": "Nozell/nzcrates",
   "description": "Crates with entitys plugin.",
   "type": "project",
   "license": "Apache-2.0",
@@ -7,11 +7,11 @@
     "pocketmine/pocketmine-mp": "^5.19",
     "customiesdevs/customies": "dev-main",
     "muqsit/invmenu": "^4.6",
-    "lyvaris/formsui": "^1.0"
+    "Nozell/formsui": "^1.0"
   },
   "autoload": {
     "psr-0": {
-      "Lyvaris\\Crates\\": "src"
+      "Nozell\\Crates\\": "src"
     }
   }
 }

@@ -2,40 +2,40 @@
 
 ---
 
-![GitHub followers](https://img.shields.io/github/followers/lyvaris) ![GitHub Repo stars](https://img.shields.io/github/stars/lyvaris/nzcrates) ![GitHub language count](https://img.shields.io/github/languages/count/lyvaris/nzcrates)
-![GitHub top language](https://img.shields.io/github/languages/top/lyvaris/nzcrates)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/t/lyvaris/nzcrates)
-![GitHub contributors](https://img.shields.io/github/contributors/lyvaris/nzcrates)
-![GitHub Created At](https://img.shields.io/github/created-at/lyvaris/nzcrates)
+![GitHub followers](https://img.shields.io/github/followers/Nozell) ![GitHub Repo stars](https://img.shields.io/github/stars/Nozell/nzcrates) ![GitHub language count](https://img.shields.io/github/languages/count/Nozell/nzcrates)
+![GitHub top language](https://img.shields.io/github/languages/top/Nozell/nzcrates)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/Nozell/nzcrates)
+![GitHub contributors](https://img.shields.io/github/contributors/Nozell/nzcrates)
+![GitHub Created At](https://img.shields.io/github/created-at/Nozell/nzcrates)
 
 <table align="center">
 <tr border="none">
 <td width="50%" align="left">
   
-- <img src="https://komarev.com/ghpvc/?username=lyvaris&label=Profile%20views&color=0e75b6&style=flat" alt="Lyvaris" /> </p>
+- <img src="https://komarev.com/ghpvc/?username=Nozell&label=Profile%20views&color=0e75b6&style=flat" alt="Nozell" /> </p>
 
 - 💻 Passionate about **Arduino Projects, PLC Automation & Web Development**
 
 - <p>
-    <a href="https://www.paypal.com/paypalme/vLyvaris" target="_blank" rel="noopener noreferrer">
+    <a href="https://www.paypal.com/paypalme/vNozell" target="_blank" rel="noopener noreferrer">
       <img src="https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white" alt="PayPal Badge" />
     </a>
   </p>
 
 - <p>
-    <a href="mailto:imjustLyvaris@gmail.com" target="_blank" rel="noopener noreferrer">
+    <a href="mailto:imjustNozell@gmail.com" target="_blank" rel="noopener noreferrer">
       <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail Badge" />
     </a>
   </p>
 
 - <p>
-  <a href="https://github.com/ImJustLyvaris" target="_blank" rel="noopener noreferrer">
+  <a href="https://github.com/ImJustNozell" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Badge" />
   </a>
 
-  <img src="https://img.shields.io/github/stars/lyvaris?style=for-the-badge" alt="GitHub User's stars" />
+  <img src="https://img.shields.io/github/stars/Nozell?style=for-the-badge" alt="GitHub User's stars" />
 
-  <img src="https://img.shields.io/github/followers/lyvaris?style=for-the-badge" alt="GitHub followers" />
+  <img src="https://img.shields.io/github/followers/Nozell?style=for-the-badge" alt="GitHub followers" />
 
 </p>
 
@@ -61,8 +61,8 @@
 **EN**: **NzCrates** is a plugin for **PocketMine-MP** that allows you to **create** and **manage crates** (reward boxes) with support for **entities**, **animations**, and **particles**. Everything is **editable** directly in-game using items!
 
 [🎮 Únete al Discord | Join Discord](https://discord.gg/NvxR2SCyQY)  
-[📹 Síguenos en YouTube | Follow us on YouTube](https://www.youtube.com/@Lyvaris)  
-[🎵 Síguenos en TikTok | Follow us on TikTok](https://www.tiktok.com/@Lyvaris_darkwind)
+[📹 Síguenos en YouTube | Follow us on YouTube](https://www.youtube.com/@Nozell)  
+[🎵 Síguenos en TikTok | Follow us on TikTok](https://www.tiktok.com/@Nozell_darkwind)
 
 ---
 
@@ -72,7 +72,7 @@
 - 📦 **Libs**:
   - [`Customies`](https://github.com/CustomiesDevs/Customies): Para registro de entidades | For entity registration.
   - [`Invmenu`](https://github.com/Muqsit/InvMenu): Para la interacción de inventarios | For inventory interaction.
-  - [`FormsUi`](https://github.com/ImJustLyvaris/FormsUI): Para los menús en UI | For UI menus.
+  - [`FormsUi`](https://github.com/ImJustNozell/FormsUI): Para los menús en UI | For UI menus.
 
 ---
 
@@ -143,7 +143,7 @@ language: "es"
 
 ## 👨‍💻 Autor | **Author**
 
-- **Lyvaris**
+- **Nozell**
 
 ---
 

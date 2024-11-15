@@ -1,4 +1,4 @@
---- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/ImJustLyvaris/NzCrates
+--- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/ImJustNozell/NzCrates
 build-by-default: true
 branches:
   - main
@@ -11,5 +11,5 @@ projects:
     libs:
       - src: Muqsit/invmenu/InvMenu
         version: ^4.6
-      - src: Lyvaris/FormsUI/FormsUI
+      - src: Nozell/FormsUI/FormsUI
         version: ^1.0

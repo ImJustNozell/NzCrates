@@ -1,8 +1,8 @@
 name: NzCrates
 version: 1.0.4-stable
-author: Lyvaris
+author: Nozell
 api: [5.0.0]
-main: Lyvaris\Crates\Main
+main: Nozell\Crates\Main
 description: "Crates plugin with custom textures and items editing in game"
 depend: [Customies]
 permissions:

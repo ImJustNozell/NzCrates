@@ -34,9 +34,7 @@
         }
       },
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "MIT"
-      ],
+      "license": ["MIT"],
       "authors": [
         {
           "name": "Jitendra Adhikari",
@@ -44,11 +42,7 @@
         }
       ],
       "description": "Lightweight JSON comment stripper library for PHP",
-      "keywords": [
-        "comment",
-        "json",
-        "strip-comment"
-      ],
+      "keywords": ["comment", "json", "strip-comment"],
       "support": {
         "issues": "https://github.com/adhocore/php-json-comment/issues",
         "source": "https://github.com/adhocore/php-json-comment/tree/1.2.1"
@@ -94,9 +88,7 @@
         }
       },
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "MIT"
-      ],
+      "license": ["MIT"],
       "description": "Arbitrary-precision arithmetic library",
       "keywords": [
         "Arbitrary-precision",
@@ -160,16 +152,16 @@
       "time": "2024-10-03T13:55:05+00:00"
     },
     {
-      "name": "lyvaris/formsui",
+      "name": "Nozell/formsui",
       "version": "1.0.0",
       "source": {
         "type": "git",
-        "url": "https://github.com/Lyvaris/FormsUI.git",
+        "url": "https://github.com/Nozell/FormsUI.git",
         "reference": "f26f804b1249748f6b2f51e677d23fde344d8b83"
       },
       "dist": {
         "type": "zip",
-        "url": "https://api.github.com/repos/Lyvaris/FormsUI/zipball/f26f804b1249748f6b2f51e677d23fde344d8b83",
+        "url": "https://api.github.com/repos/Nozell/FormsUI/zipball/f26f804b1249748f6b2f51e677d23fde344d8b83",
         "reference": "f26f804b1249748f6b2f51e677d23fde344d8b83",
         "shasum": ""
       },
@@ -189,11 +181,9 @@
         }
       },
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "GPL-3.0-only"
-      ],
+      "license": ["GPL-3.0-only"],
       "support": {
-        "source": "https://github.com/Lyvaris/FormsUI/tree/1.0.0"
+        "source": "https://github.com/Nozell/FormsUI/tree/1.0.0"
       },
       "time": "2024-09-26T17:47:26+00:00"
     },
@@ -222,14 +212,10 @@
         }
       },
       "autoload": {
-        "classmap": [
-          "src"
-        ]
+        "classmap": ["src"]
       },
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "GPL-3.0"
-      ],
+      "license": ["GPL-3.0"],
       "authors": [
         {
           "name": "Muqsit",
@@ -259,9 +245,7 @@
       },
       "type": "library",
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "CC0-1.0"
-      ],
+      "license": ["CC0-1.0"],
       "description": "Schemas describing how to upgrade saved block data in older Minecraft: Bedrock Edition world saves",
       "support": {
         "issues": "https://github.com/pmmp/BedrockBlockUpgradeSchema/issues",
@@ -285,9 +269,7 @@
       },
       "type": "library",
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "CC0-1.0"
-      ],
+      "license": ["CC0-1.0"],
       "description": "Blobs of data generated from Minecraft: Bedrock Edition, used by PocketMine-MP",
       "support": {
         "issues": "https://github.com/pmmp/BedrockData/issues",
@@ -311,9 +293,7 @@
       },
       "type": "library",
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "CC0-1.0"
-      ],
+      "license": ["CC0-1.0"],
       "description": "JSON schemas for upgrading items found in older Minecraft: Bedrock world saves",
       "support": {
         "issues": "https://github.com/pmmp/BedrockItemUpgradeSchema/issues",
@@ -357,9 +337,7 @@
         }
       },
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "LGPL-3.0"
-      ],
+      "license": ["LGPL-3.0"],
       "description": "An implementation of the Minecraft: Bedrock Edition protocol in PHP",
       "support": {
         "issues": "https://github.com/pmmp/BedrockProtocol/issues",
@@ -399,9 +377,7 @@
         }
       },
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "LGPL-3.0"
-      ],
+      "license": ["LGPL-3.0"],
       "description": "Classes and methods for conveniently handling binary data",
       "support": {
         "issues": "https://github.com/pmmp/BinaryUtils/issues",
@@ -443,9 +419,7 @@
         }
       },
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "MIT"
-      ],
+      "license": ["MIT"],
       "authors": [
         {
           "name": "Chris Wright",
@@ -487,9 +461,7 @@
         }
       },
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "LGPL-3.0"
-      ],
+      "license": ["LGPL-3.0"],
       "description": "Color handling library used by PocketMine-MP and related projects",
       "support": {
         "issues": "https://github.com/pmmp/Color/issues",
@@ -526,9 +498,7 @@
         }
       },
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "LGPL-3.0"
-      ],
+      "license": ["LGPL-3.0"],
       "description": "Utilities to handle nasty PHP E_* errors in a usable way",
       "support": {
         "issues": "https://github.com/pmmp/ErrorHandler/issues",
@@ -585,14 +555,10 @@
       },
       "type": "library",
       "autoload": {
-        "classmap": [
-          "./src"
-        ]
+        "classmap": ["./src"]
       },
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "LGPL-3.0"
-      ],
+      "license": ["LGPL-3.0"],
       "description": "Logging components used by PocketMine-MP and related projects",
       "support": {
         "issues": "https://github.com/pmmp/Log/issues",
@@ -631,9 +597,7 @@
         }
       },
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "LGPL-3.0"
-      ],
+      "license": ["LGPL-3.0"],
       "description": "PHP library containing math related code used in PocketMine-MP",
       "support": {
         "issues": "https://github.com/pmmp/Math/issues",
@@ -673,9 +637,7 @@
         }
       },
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "LGPL-3.0"
-      ],
+      "license": ["LGPL-3.0"],
       "description": "PHP library for working with Named Binary Tags",
       "support": {
         "issues": "https://github.com/pmmp/NBT/issues",
@@ -718,9 +680,7 @@
         }
       },
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "OSL-3.0"
-      ],
+      "license": ["OSL-3.0"],
       "authors": [
         {
           "name": "Christian Weiske",
@@ -806,17 +766,13 @@
       },
       "type": "project",
       "autoload": {
-        "files": [
-          "src/CoreConstants.php"
-        ],
+        "files": ["src/CoreConstants.php"],
         "psr-4": {
           "pocketmine\\": "src/"
         }
       },
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "LGPL-3.0"
-      ],
+      "license": ["LGPL-3.0"],
       "description": "A server software for Minecraft: Bedrock Edition written in PHP",
       "homepage": "https://pmmp.io",
       "support": {
@@ -868,9 +824,7 @@
         }
       },
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "GPL-3.0"
-      ],
+      "license": ["GPL-3.0"],
       "description": "A RakNet server implementation written in PHP",
       "support": {
         "issues": "https://github.com/pmmp/RakLib/issues",
@@ -909,9 +863,7 @@
         }
       },
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "GPL-3.0"
-      ],
+      "license": ["GPL-3.0"],
       "description": "Channel-based protocols for inter-thread/inter-process communication with RakLib",
       "support": {
         "issues": "https://github.com/pmmp/RakLibIpc/issues",
@@ -949,9 +901,7 @@
         }
       },
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "LGPL-3.0"
-      ],
+      "license": ["LGPL-3.0"],
       "description": "Thread notification management library for code using the pthreads extension",
       "support": {
         "issues": "https://github.com/pmmp/Snooze/issues",
@@ -1013,9 +963,7 @@
         }
       },
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "MIT"
-      ],
+      "license": ["MIT"],
       "authors": [
         {
           "name": "Ben Ramsey",
@@ -1024,14 +972,7 @@
         }
       ],
       "description": "A PHP library for representing and manipulating collections.",
-      "keywords": [
-        "array",
-        "collection",
-        "hash",
-        "map",
-        "queue",
-        "set"
-      ],
+      "keywords": ["array", "collection", "hash", "map", "queue", "set"],
       "support": {
         "issues": "https://github.com/ramsey/collection/issues",
         "source": "https://github.com/ramsey/collection/tree/2.0.0"
@@ -1107,23 +1048,15 @@
         }
       },
       "autoload": {
-        "files": [
-          "src/functions.php"
-        ],
+        "files": ["src/functions.php"],
         "psr-4": {
           "Ramsey\\Uuid\\": "src/"
         }
       },
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "MIT"
-      ],
+      "license": ["MIT"],
       "description": "A PHP library for generating and working with universally unique identifiers (UUIDs).",
-      "keywords": [
-        "guid",
-        "identifier",
-        "uuid"
-      ],
+      "keywords": ["guid", "identifier", "uuid"],
       "support": {
         "issues": "https://github.com/ramsey/uuid/issues",
         "source": "https://github.com/ramsey/uuid/tree/4.7.6"
@@ -1167,14 +1100,10 @@
         "psr-4": {
           "Symfony\\Component\\Filesystem\\": ""
         },
-        "exclude-from-classmap": [
-          "/Tests/"
-        ]
+        "exclude-from-classmap": ["/Tests/"]
       },
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "MIT"
-      ],
+      "license": ["MIT"],
       "authors": [
         {
           "name": "Fabien Potencier",
@@ -1237,17 +1166,13 @@
         }
       },
       "autoload": {
-        "files": [
-          "bootstrap.php"
-        ],
+        "files": ["bootstrap.php"],
         "psr-4": {
           "Symfony\\Polyfill\\Ctype\\": ""
         }
       },
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "MIT"
-      ],
+      "license": ["MIT"],
       "authors": [
         {
           "name": "Gert de Pagter",
@@ -1260,12 +1185,7 @@
       ],
       "description": "Symfony polyfill for ctype functions",
       "homepage": "https://symfony.com",
-      "keywords": [
-        "compatibility",
-        "ctype",
-        "polyfill",
-        "portable"
-      ],
+      "keywords": ["compatibility", "ctype", "polyfill", "portable"],
       "support": {
         "source": "https://github.com/symfony/polyfill-ctype/tree/v1.31.0"
       },
@@ -1316,17 +1236,13 @@
         }
       },
       "autoload": {
-        "files": [
-          "bootstrap.php"
-        ],
+        "files": ["bootstrap.php"],
         "psr-4": {
           "Symfony\\Polyfill\\Mbstring\\": ""
         }
       },
       "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "MIT"
-      ],
+      "license": ["MIT"],
       "authors": [
         {
           "name": "Nicolas Grekas",
@@ -1339,13 +1255,7 @@
       ],
       "description": "Symfony polyfill for the Mbstring extension",
       "homepage": "https://symfony.com",
-      "keywords": [
-        "compatibility",
-        "mbstring",
-        "polyfill",
-        "portable",
-        "shim"
-      ],
+      "keywords": ["compatibility", "mbstring", "polyfill", "portable", "shim"],
       "support": {
         "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.31.0"
       },
