@@ -51,52 +51,63 @@ class Loader
     }
     public function LoadLangs(Main $main): void
     {
-        $main->saveResource("lang/chinese.json");
-        $main->saveResource("lang/english.json");
-        $main->saveResource("lang/french.json");
-        $main->saveResource("lang/japanese.json");
-        $main->saveResource("lang/spanish.json");
-        $main->saveResource("lang/turkish.json");
+        $languages = [
+            "lang/chinese.json",
+            "lang/english.json",
+            "lang/french.json",
+            "lang/japanese.json",
+            "lang/spanish.json",
+            "lang/turkish.json"
+        ];
+
+        foreach ($languages as $language) {
+            $main->saveResource($language);
+        }
 
         LangManager::getInstance()->loadLangs();
     }
 
+
     public function RegisterEntities(): void
     {
-        CustomiesEntityFactory::getInstance()->registerEntity(
-            MageBoxEntity::class,
-            EntityIds::Mage,
-            null
-        );
+        $entities = [
+            [
+                'class'    => MageBoxEntity::class,
+                'id'       => EntityIds::Mage,
+                'humanoid' => null
+            ],
+            [
+                'class'    => IceBoxEntity::class,
+                'id'       => EntityIds::Ice,
+                'humanoid' => self::Humanoid
+            ],
+            [
+                'class'    => EnderBoxEntity::class,
+                'id'       => EntityIds::Ender,
+                'humanoid' => self::Humanoid
+            ],
+            [
+                'class'    => MagmaBoxEntity::class,
+                'id'       => EntityIds::Magma,
+                'humanoid' => self::Humanoid
+            ],
+            [
+                'class'    => PegasusBoxEntity::class,
+                'id'       => EntityIds::Pegasus,
+                'humanoid' => self::Humanoid
+            ],
+        ];
 
-        CustomiesEntityFactory::getInstance()->registerEntity(
-            IceBoxEntity::class,
-            EntityIds::Ice,
-            null,
-            self::Humanoid
-        );
-
-        CustomiesEntityFactory::getInstance()->registerEntity(
-            EnderBoxEntity::class,
-            EntityIds::Ender,
-            null,
-            self::Humanoid
-        );
-
-        CustomiesEntityFactory::getInstance()->registerEntity(
-            MagmaBoxEntity::class,
-            EntityIds::Magma,
-            null,
-            self::Humanoid
-        );
-
-        CustomiesEntityFactory::getInstance()->registerEntity(
-            PegasusBoxEntity::class,
-            EntityIds::Pegasus,
-            null,
-            self::Humanoid
-        );
+        foreach ($entities as $entity) {
+            CustomiesEntityFactory::getInstance()->registerEntity(
+                $entity['class'],
+                $entity['id'],
+                null,
+                $entity['humanoid']
+            );
+        }
     }
+
 
     public function LoadResourcepack(Main $main)
     {
