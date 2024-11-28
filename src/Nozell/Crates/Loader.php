@@ -74,7 +74,7 @@ class Loader
             [
                 'class'    => MageBoxEntity::class,
                 'id'       => EntityIds::Mage,
-                'humanoid' => null
+                'humanoid' => self::Humanoid
             ],
             [
                 'class'    => IceBoxEntity::class,
